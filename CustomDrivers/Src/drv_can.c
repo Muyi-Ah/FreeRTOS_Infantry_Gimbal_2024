@@ -1,3 +1,13 @@
+/*
+ * @Author: Ryan Xavier 467030312@qq.com
+ * @Date: 2024-06-08 04:22:12
+ * @LastEditors: Ryan Xavier 467030312@qq.com
+ * @LastEditTime: 2024-06-08 07:26:38
+ * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_can.c
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ */
 #include "drv_can.h"
 
 /* 函数声明 */

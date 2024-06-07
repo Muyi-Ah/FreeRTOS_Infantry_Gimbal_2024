@@ -1,10 +1,12 @@
 /*
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @Date: 2024-06-08 03:31:46
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-06-08 03:31:55
- * @FilePath: \workspace (工作区)c:\Users\Ryan\Desktop\新建文件夹 (4)\pid.h
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ * @Author: Ryan Xavier 467030312@qq.com
+ * @Date: 2024-06-08 04:22:03
+ * @LastEditors: Ryan Xavier 467030312@qq.com
+ * @LastEditTime: 2024-06-08 07:20:31
+ * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\pid.h
+ * @Description: 
+ * 
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */
 #ifndef PID_H
 #define PID_H

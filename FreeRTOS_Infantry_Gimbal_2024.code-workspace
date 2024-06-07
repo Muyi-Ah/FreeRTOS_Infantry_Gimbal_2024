@@ -9,7 +9,8 @@
 			"app_ui.h": "c",
 			"ch110.h": "c",
 			"freertos.h": "c",
-			"motor.h": "c"
+			"motor.h": "c",
+			"communication.h": "c"
 		}
 	}
 }
