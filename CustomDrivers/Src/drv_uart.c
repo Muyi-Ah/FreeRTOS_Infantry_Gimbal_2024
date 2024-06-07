@@ -1,12 +1,12 @@
 /*
- * @Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+ * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
- * @LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
- * @LastEditTime: 2024-06-08 05:55:32
+ * @LastEditors: Ryan Xavier 467030312@qq.com
+ * @LastEditTime: 2024-06-08 07:26:57
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_uart.c
  * @Description: 
  * 
- * Copyright (c) 2024 by ${git_name_email}, All Rights Reserved. 
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */
 #include "drv_uart.h"
 
