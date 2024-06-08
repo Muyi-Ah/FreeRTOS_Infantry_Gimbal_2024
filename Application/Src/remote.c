@@ -2,17 +2,22 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:25:27
+ * @LastEditTime: 2024-06-08 11:05:35
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\remote.c
- * @Description: 
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ * @Description: 遥控器数据处理
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "remote.h"
 
 /* 创建结构体 */
 RecMsg_t RecMsg;
 
+
+/**
+ * @description: 遥控器数据初始化
+ * @return {void}
+ */
 void remote_init(void)
 {
     RecMsg.remote.ch0 = 1024;
@@ -21,6 +26,12 @@ void remote_init(void)
     RecMsg.remote.ch3 = 1024;
 }
 
+
+/**
+ * @description: 遥控器数据更新
+ * @param {uint8_t} rx_buf 数据列表
+ * @return {void}
+ */
 void remote_data_update(uint8_t rx_buf[remote_data_size])
 {
     RecMsg.remote.ch0 = (rx_buf[0] | rx_buf[1] << 8) & 0x07FF;

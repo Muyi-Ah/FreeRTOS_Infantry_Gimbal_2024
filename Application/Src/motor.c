@@ -2,13 +2,15 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:24:11
+ * @LastEditTime: 2024-06-08 19:51:02
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\motor.c
- * @Description: 
+ * @Description: 电机的一些内存和数据处理函数函数
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */
 #include "motor.h"
+
+/*索引创建*/
 
 uint8_t rotating_speed_count;
 uint8_t relative_angle_count;
@@ -17,6 +19,10 @@ uint8_t relative_angle_cascade_count;
 uint8_t absolute_angle_cascade_count;
 uint8_t gyro_angle_cascade_count;
 uint8_t vision_angle_cascade_count;
+
+
+
+/*电机 & PID结构体指针列表创建*/
 
 struct motor_info_t* motor_info_list[motor_count];
 struct rotating_speed_t* rotating_speed_list[motor_count];
@@ -27,6 +33,14 @@ struct absolute_angle_cascade_t* absolute_angle_cascade_list[motor_count];
 struct gyro_angle_cascade_t* gyro_angle_cascade_list[motor_count];
 struct vision_angle_cascade_t* vision_angle_cascade_list[motor_count];
 
+
+
+/**
+ * @description: 电机添加
+ * @param {uint32_t} RecId 接收ID
+ * @param {uint32_t} SendId 发送ID
+ * @return {void}
+ */
 void add_motor( uint32_t RecId, uint32_t SendId )
 {
 	static uint8_t motor_info_count;
@@ -47,6 +61,12 @@ void add_motor( uint32_t RecId, uint32_t SendId )
 	motor_info_count++;
 }
 
+/**
+ * @description: 申请内存空间
+ * @param {uint8_t} index 索引
+ * @param {enum PID_type_t} type PID计算类型
+ * @return {int8_t} 错误值
+ */
 int8_t request_structure_memory( uint8_t index, enum PID_type_t type )
 {	
 	switch( type )
@@ -140,6 +160,13 @@ int8_t request_structure_memory( uint8_t index, enum PID_type_t type )
 	return LIB_OK;
 }
 
+
+
+/**
+ * @description: 内存释放
+ * @param {uint8_t} index 索引
+ * @return {int8_t} 错误值
+ */
 int8_t release_structure_memory( uint8_t index)
 {
 	enum PID_type_t type;
@@ -189,7 +216,13 @@ int8_t release_structure_memory( uint8_t index)
 	return LIB_OK;
 }
 
-/* 将需要旋转的角度转换为电机角度 */
+
+
+/**
+ * @description: 将需要旋转的角度转换为电机角度(0-8191)
+ * @param {int32_t} value 值
+ * @return {uint16_t} 处理后的值(0-8191)
+ */
 uint16_t absolute_angle_remainder( int32_t value )
 {
 	if( value > 8192 )
@@ -200,7 +233,13 @@ uint16_t absolute_angle_remainder( int32_t value )
 		return value;
 }
 
-/* 清除指定ID电机的累计旋转角度 */
+
+
+/**
+ * @description: 清除指定ID电机的累计旋转角度
+ * @param {uint32_t} RecId 接收ID
+ * @return {void}
+ */
 void motor_angle_sum_clear( uint32_t RecId )
 {
 	for( uint8_t index = 0; index < motor_count; index++ )
@@ -222,7 +261,13 @@ void motor_angle_sum_clear( uint32_t RecId )
 // 	}
 // }
 
-/* 用于算出电机相对于上一次所改变的角度 */
+
+
+/**
+ * @description: 算出电机相对于上一次所改变的角度
+ * @param {uint8_t} index 索引
+ * @return {void}
+ */
 void angle_change_clac(uint8_t index)
 {
     int16_t res1 = 0, res2 = 0;

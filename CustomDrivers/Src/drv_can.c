@@ -4,7 +4,7 @@
  * @LastEditors: Ryan Xavier 467030312@qq.com
  * @LastEditTime: 2024-06-08 07:26:38
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_can.c
- * @Description: 
+ * @Description: can报文数据处理
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */
@@ -18,6 +18,11 @@ uint8_t tx_data_0x200[8];
 uint8_t tx_data_0x1FF[8];
 uint8_t tx_data_0x2FF[8];
 
+
+/**
+ * @description: can启动接收
+ * @return {void}
+ */
 void can_manage_init(void)
 {
     /* can1 */
@@ -65,6 +70,12 @@ void can_manage_init(void)
     HAL_CAN_Start(&CH110_can);
 }
 
+
+/**
+ * @description: can中断回调
+ * @param {CAN_HandleTypeDef*} hcan can实例指针
+ * @return {void}
+ */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
 {
     /* 电机实例 */
@@ -182,6 +193,12 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
     }
 }
 
+
+/**
+ * @description: 0x200发送ID数据encode
+ * @param {uint8_t} index 索引
+ * @return {void}
+ */
 static void __0x200_Encode( uint8_t index )
 {
   
@@ -203,6 +220,12 @@ static void __0x200_Encode( uint8_t index )
 	}
 }
 
+
+/**
+ * @description: 0x1FF发送ID数据encode
+ * @param {uint8_t} index 索引
+ * @return {void}
+ */
 static void __0x1FF_Encode( uint8_t index )
 {
   
@@ -224,6 +247,12 @@ static void __0x1FF_Encode( uint8_t index )
 	}
 }
 
+
+/**
+ * @description: 0x2FF发送ID数据encode
+ * @param {uint8_t} index 索引
+ * @return {void}
+ */
 static void __0x2FF_Encode( uint8_t index )
 {
   
@@ -241,6 +270,12 @@ static void __0x2FF_Encode( uint8_t index )
 	}
 }
 
+
+/**
+ * @description: 电机报文发送
+ * @param {CAN_HandleTypeDef} CanHandle can实例
+ * @return {void}
+ */
 void motor_control_send( CAN_HandleTypeDef CanHandle )
 {
 	// xSemaphoreTake( xCAN1_Semaphore, portMAX_DELAY );

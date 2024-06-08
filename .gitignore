@@ -1,0 +1,50 @@
+# Keil specific files
+*.axf
+*.elf
+*.gpdsc
+*.htm
+*.lnp
+*.plg
+*.tra
+*.uvguix.*
+*.uvopt.*
+*.uvoptx
+*.uvproj
+*.uvprojx
+
+# Object files
+*.d
+*.dep
+*.lst
+*.map
+*.o
+*.obj
+*.crf
+
+# Build directories
+build/
+out/
+bin/
+obj/
+
+# Temporary files
+*.bak
+*.log
+*.tmp
+
+# Backup files
+*~ 
+*.swp
+*.swo
+
+# Keil 5 specific files
+*.cprj
+*.rteconfig
+*.sct
+*.packlog
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+
+MDK-ARM/FreeRTOS_Infantry_Gimbal_2024.uvguix.Ryan
