@@ -13,7 +13,7 @@
 /* 创建变量 */
 
 uint8_t motor_error;
-uint8_t error_motor[motor_count];
+uint8_t error_motor[MOTOR_COUNT];
 
 uint8_t IMU_online_reply;
 uint8_t IMU_error;

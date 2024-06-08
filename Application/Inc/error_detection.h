@@ -21,7 +21,7 @@
 
 /* 变量外部声明 */  
 extern uint8_t motor_error;
-extern uint8_t error_motor[motor_count];
+extern uint8_t error_motor[MOTOR_COUNT];
 
 extern uint8_t IMU_online_reply;
 extern uint8_t IMU_error;

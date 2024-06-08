@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 19:48:18
+ * @LastEditTime: 2024-06-09 00:23:57
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\CH110.c
  * @Description: CH110累计角度更新
  *

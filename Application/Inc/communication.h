@@ -14,5 +14,12 @@
 /*标准库引用*/
 #include "stdint.h"
 
+/*用户头文件引用*/
+#include "simple_verify.h"
+#include "sys_config.h"
+
+/*函数外部声明*/
+
+void CommunicationData_Update(uint8_t* rx_buf);
 
 #endif /*COMMUNICATION_H*/

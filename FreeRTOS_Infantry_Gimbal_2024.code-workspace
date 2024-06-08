@@ -12,7 +12,9 @@
 			"motor.h": "c",
 			"communication.h": "c",
 			"drv_can.h": "c",
-			"sys_config.h": "c"
+			"sys_config.h": "c",
+			"config.h": "c",
+			"referee.h": "c"
 		}
 	}
 }

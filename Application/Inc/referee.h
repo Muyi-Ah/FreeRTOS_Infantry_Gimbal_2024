@@ -14,5 +14,8 @@
 /*标准库引用*/
 #include "stdint.h"
 
+/*用户头文件引用*/
+#include "CRC.h"
+
 
 #endif /*REFEREE_H*/
