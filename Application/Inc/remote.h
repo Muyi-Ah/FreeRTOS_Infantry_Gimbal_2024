@@ -4,9 +4,9 @@
  * @LastEditors: Ryan Xavier 467030312@qq.com
  * @LastEditTime: 2024-06-08 07:21:11
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\remote.h
- * @Description: 
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ * @Description:
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #ifndef REMOTE_H
 #define REMOTE_H
@@ -63,9 +63,12 @@ typedef struct {
 } RecMsg_t;
 
 /* 结构体外部声明 */
+
 extern RecMsg_t RecMsg;
 
+
 /* 函数外部声明 */
+
 void remote_init(void);
 void remote_data_update(uint8_t rx_buf[remote_data_size]);
 

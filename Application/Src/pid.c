@@ -2,14 +2,20 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:24:21
+ * @LastEditTime: 2024-06-08 11:03:32
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\pid.c
- * @Description: 
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ * @Description:
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "pid.h"
 
+
+/**
+ * @description: 查找与接收ID对应的索引
+ * @param {uint32_t} RecId 接收ID
+ * @return {int8_t} 索引
+ */
 int8_t RecId_find(uint32_t RecId)
 {
     for (uint8_t index = 0; index < motor_count; index++) {
@@ -20,6 +26,13 @@ int8_t RecId_find(uint32_t RecId)
     return INDEX_ERROR;
 }
 
+
+/**
+ * @description: int16类型限幅
+ * @param {int16_t} amt 输入值
+ * @param {int16_t} limit 幅值
+ * @return {*}
+ */
 int16_t limit_int16_t(int16_t amt, int16_t limit)
 {
     if (amt < -limit)
@@ -30,6 +43,14 @@ int16_t limit_int16_t(int16_t amt, int16_t limit)
         return amt;
 }
 
+
+/**
+ * @description: int16类型积分限幅
+ * @param {int32_t} amt 积分值
+ * @param {int16_t} add 误差值
+ * @param {int32_t} limit 限幅值
+ * @return {*}
+ */
 int32_t cumulative_limit_int16_t(int32_t amt, int16_t add, int32_t limit)
 {
     if ((amt + add) < -limit)
@@ -39,6 +60,14 @@ int32_t cumulative_limit_int16_t(int32_t amt, int16_t add, int32_t limit)
     return amt + add;
 }
 
+
+/**
+ * @description: int32类型限幅
+ * @param {int32_t} amt 积分值
+ * @param {int32_t} add 误差值
+ * @param {int32_t} limit 限幅值
+ * @return {*}
+ */
 int32_t cumulative_limit_int32_t(int32_t amt, int32_t add, int32_t limit)
 {
     if ((amt + add) < -limit)
@@ -48,6 +77,13 @@ int32_t cumulative_limit_int32_t(int32_t amt, int32_t add, int32_t limit)
     return amt + add;
 }
 
+
+/**
+ * @description: 输出限幅
+ * @param {int32_t} amt 输入值
+ * @param {int16_t} limit 限幅值
+ * @return {*}
+ */
 int16_t output_limit(int32_t amt, int16_t limit)
 {
     if (amt < -limit)
@@ -58,11 +94,22 @@ int16_t output_limit(int32_t amt, int16_t limit)
         return amt;
 }
 
-int8_t
-rotating_speed_calculation(uint32_t RecId, int16_t target_value, int16_t target_value_max, PID_param_struct_t structure)
+
+/**
+ * @description: 速度PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {int16_t} target_value 目标值
+ * @param {int16_t} target_value_max 目标值限幅
+ * @param {PID_param_struct_t} structure PID结构体
+ * @return {*}
+ */
+int8_t rotating_speed_calculation(uint32_t RecId,
+                                  int16_t target_value,
+                                  int16_t target_value_max,
+                                  PID_param_struct_t structure)
 {
     struct rotating_speed_t* pStruture = NULL;
-    int32_t local_pid_result = 0;
+    int32_t local_pid_result           = 0;
 
     int8_t index = RecId_find(RecId);
 
@@ -124,6 +171,16 @@ rotating_speed_calculation(uint32_t RecId, int16_t target_value, int16_t target_
     return LIB_OK;
 }
 
+
+/**
+ * @description: 相对编码器位置PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {int32_t} target_value 目标值(8192制)
+ * @param {int32_t} CW_angle_max 顺时针旋转最大值(8192制)
+ * @param {int32_t} CCW_angle_max 逆时针旋转最大值(8192制)
+ * @param {PID_param_struct_t} structure PID结构体
+ * @return {*}
+ */
 int8_t relative_angle_calculation(uint32_t RecId,
                                   int32_t target_value,
                                   int32_t CW_angle_max,
@@ -131,9 +188,9 @@ int8_t relative_angle_calculation(uint32_t RecId,
                                   PID_param_struct_t structure)
 {
     struct relative_angle_t* pStruture = NULL;
-    int32_t local_pid_result = 0;
+    int32_t local_pid_result           = 0;
     int32_t res1 = 0, res2 = 0;
-    int32_t mechanical_angle_change = 0;
+    int32_t mechanical_angle_change      = 0;
     int32_t real_mechanical_angle_change = 0;
 
     int8_t index = RecId_find(RecId);
@@ -221,13 +278,24 @@ int8_t relative_angle_calculation(uint32_t RecId,
     return LIB_OK;
 }
 
-int8_t
-absolute_angle_calculation(uint32_t RecId, uint16_t target_value, enum direction direct, PID_param_struct_t structure)
+
+/**
+ * @description: 绝对编码器位置PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {uint16_t} target_value 目标值(0-8191)
+ * @param {enum direction} direct 转动方向
+ * @param {PID_param_struct_t} structure PID结构体
+ * @return {*}
+ */
+int8_t absolute_angle_calculation(uint32_t RecId,
+                                  uint16_t target_value,
+                                  enum direction direct,
+                                  PID_param_struct_t structure)
 {
     struct absolute_angle_t* pStruture = NULL;
-    int32_t local_pid_result = 0;
-    uint16_t big_value = 0;
-    uint16_t small_value = 0;
+    int32_t local_pid_result           = 0;
+    uint16_t big_value                 = 0;
+    uint16_t small_value               = 0;
 
     int8_t index = RecId_find(RecId);
 
@@ -267,10 +335,10 @@ absolute_angle_calculation(uint32_t RecId, uint16_t target_value, enum direction
         case Both:
             if (pStruture->target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->target_value;
+                big_value   = pStruture->target_value;
             }
 
             if (big_value - small_value < 8192 - abs(small_value - big_value)) {
@@ -292,10 +360,10 @@ absolute_angle_calculation(uint32_t RecId, uint16_t target_value, enum direction
         case CW:
             if (pStruture->target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->target_value;
+                big_value   = pStruture->target_value;
             }
 
             if (pStruture->target_value < pStruture->mechanical_angle) {
@@ -309,10 +377,10 @@ absolute_angle_calculation(uint32_t RecId, uint16_t target_value, enum direction
         case CCW:
             if (pStruture->target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->target_value;
+                big_value   = pStruture->target_value;
             }
 
             if (pStruture->target_value < pStruture->mechanical_angle) {
@@ -347,6 +415,16 @@ absolute_angle_calculation(uint32_t RecId, uint16_t target_value, enum direction
     return LIB_OK;
 }
 
+
+/**
+ * @description: 绝对编码器位置串级PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {uint16_t} target_value 目标值(0-8191)
+ * @param {enum direction} direct 旋转方向
+ * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
+ * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
+ * @return {*}
+ */
 int8_t absolute_angle_cascade_calculation(uint32_t RecId,
                                           uint16_t target_value,
                                           enum direction direct,
@@ -354,10 +432,10 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
                                           secondary_PID_param_struct_t secondary_structure)
 {
     struct absolute_angle_cascade_t* pStruture = NULL;
-    int32_t primary_pid_result = 0;
-    int32_t secondary_pid_result = 0;
-    uint16_t big_value = 0;
-    uint16_t small_value = 0;
+    int32_t primary_pid_result                 = 0;
+    int32_t secondary_pid_result               = 0;
+    uint16_t big_value                         = 0;
+    uint16_t small_value                       = 0;
 
     int8_t index = RecId_find(RecId);
 
@@ -397,10 +475,10 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
         case Both:
             if (pStruture->primary_target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->primary_target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->primary_target_value;
+                big_value   = pStruture->primary_target_value;
             }
 
             if (big_value - small_value < 8192 - abs(small_value - big_value)) {
@@ -422,10 +500,10 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
         case CW:
             if (pStruture->primary_target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->primary_target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->primary_target_value;
+                big_value   = pStruture->primary_target_value;
             }
 
             if (pStruture->primary_target_value < pStruture->mechanical_angle) {
@@ -439,10 +517,10 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
         case CCW:
             if (pStruture->primary_target_value < pStruture->mechanical_angle) {
                 small_value = pStruture->primary_target_value;
-                big_value = pStruture->mechanical_angle;
+                big_value   = pStruture->mechanical_angle;
             } else {
                 small_value = pStruture->mechanical_angle;
-                big_value = pStruture->primary_target_value;
+                big_value   = pStruture->primary_target_value;
             }
 
             if (pStruture->primary_target_value < pStruture->mechanical_angle) {
@@ -508,6 +586,16 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
 }
 
 
+/**
+ * @description: 相对编码器位置串级PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {int32_t} target_value 目标值(8192制)
+ * @param {int32_t} CW_angle_max 顺时针旋转最大值
+ * @param {int32_t} CCW_angle_max 逆时针旋转最大值
+ * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
+ * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
+ * @return {*}
+ */
 int8_t relative_angle_cascade_calculation(uint32_t RecId,
                                           int32_t target_value,
                                           int32_t CW_angle_max,
@@ -516,10 +604,10 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
                                           secondary_PID_param_struct_t secondary_structure)
 {
     struct relative_angle_cascade_t* pStruture = NULL;
-    int32_t primary_pid_result = 0;
-    int32_t secondary_pid_result = 0;
+    int32_t primary_pid_result                 = 0;
+    int32_t secondary_pid_result               = 0;
     int32_t res1 = 0, res2 = 0;
-    int32_t mechanical_angle_change = 0;
+    int32_t mechanical_angle_change      = 0;
     int32_t real_mechanical_angle_change = 0;
 
     int8_t index = RecId_find(RecId);
@@ -552,7 +640,7 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
 
     if (!pStruture->used) {
         pStruture->mechanical_angle_previous = pStruture->mechanical_angle;
-        pStruture->used = 1;
+        pStruture->used                      = 1;
     }
 
     /* 计算角度变化值 */
@@ -642,6 +730,18 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
     return LIB_OK;
 }
 
+
+/**
+ * @description: 基于CH110 IMU串级PID
+ * @param {uint32_t} RecId 接收ID
+ * @param {int32_t} target_value 目标值(360制)
+ * @param {enum euler_axis} angular_velocity_axis 转轴数据源
+ * @param {enum speed_loop_data_source} speed_src 速度数据源
+ * @param {uint8_t} output_inversion 输出是否反向
+ * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
+ * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
+ * @return {*}
+ */
 int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
                                             int32_t target_value,
                                             enum euler_axis angular_velocity_axis,
@@ -651,8 +751,8 @@ int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
                                             secondary_PID_param_struct_t secondary_structure)
 {
     struct gyro_angle_cascade_t* pStruture = NULL;
-    int32_t primary_pid_result = 0;
-    int32_t secondary_pid_result = 0;
+    int32_t primary_pid_result             = 0;
+    int32_t secondary_pid_result           = 0;
 
     int8_t index = RecId_find(RecId);
 

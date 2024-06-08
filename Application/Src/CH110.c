@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:22:05
+ * @LastEditTime: 2024-06-08 08:55:13
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\CH110.c
  * @Description: 
  * 
@@ -11,15 +11,22 @@
 #include "CH110.h"
 
 /* 创建结构体 */
+
 CH110_data_t CH110_data;
+
+
 
 /* 创建变量 */
 /** 累计角度 **/
+ 
 float roll_cumulative_change_angle;
 float pitch_cumulative_change_angle;
 float yaw_cumulative_change_angle;
 
+
+
 /** 累计角度计算过程变量 **/
+
 float roll_offset;
 float pitch_offset;
 float yaw_offset;
@@ -31,6 +38,12 @@ float pitch_res1, pitch_res2;
 float yaw_res1, yaw_res2;
 float roll_change, pitch_change, yaw_change;
 
+
+
+/**
+ * @description: CH110累计角度计算
+ * @return {*}
+ */
 void CH110_cumulative_update(void)
 {
     /* 计算roll轴的实际变化角度 */
