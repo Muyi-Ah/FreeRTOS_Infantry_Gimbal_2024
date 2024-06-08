@@ -2,9 +2,9 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 09:03:02
+ * @LastEditTime: 2024-06-08 19:45:03
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\motor.c
- * @Description: 
+ * @Description: 电机的一些内存和数据处理函数函数
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */

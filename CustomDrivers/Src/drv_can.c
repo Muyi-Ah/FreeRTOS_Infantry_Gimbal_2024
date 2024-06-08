@@ -4,7 +4,7 @@
  * @LastEditors: Ryan Xavier 467030312@qq.com
  * @LastEditTime: 2024-06-08 07:26:38
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_can.c
- * @Description: 
+ * @Description: can报文数据处理
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */

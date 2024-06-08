@@ -4,7 +4,7 @@
  * @LastEditors: Ryan Xavier 467030312@qq.com
  * @LastEditTime: 2024-06-08 09:03:22
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\error_detection.c
- * @Description: 
+ * @Description: 错误检测
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */

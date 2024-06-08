@@ -2,9 +2,9 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 17:46:53
+ * @LastEditTime: 2024-06-08 19:40:06
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\CRC.c
- * @Description:
+ * @Description: 用于裁判系统数据校验的CRC8和CRC16
  *
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */

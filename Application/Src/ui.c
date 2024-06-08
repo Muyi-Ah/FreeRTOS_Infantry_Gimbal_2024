@@ -4,7 +4,7 @@
  * @LastEditors: Ryan Xavier 467030312@qq.com
  * @LastEditTime: 2024-06-08 07:25:54
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\ui.c
- * @Description: 
+ * @Description: ui绘制
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */

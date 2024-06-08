@@ -2,9 +2,9 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 11:15:31
+ * @LastEditTime: 2024-06-08 19:47:34
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_uart.c
- * @Description: 
+ * @Description: 串口数据处理
  * 
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
  */
