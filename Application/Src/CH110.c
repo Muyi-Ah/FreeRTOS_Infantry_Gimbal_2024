@@ -5,8 +5,8 @@
  * @LastEditTime: 2024-06-08 19:48:18
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\CH110.c
  * @Description: CH110累计角度更新
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "CH110.h"
 
@@ -15,14 +15,12 @@
 CH110_data_t CH110_data;
 
 
-
 /* 创建变量 */
 /** 累计角度 **/
- 
+
 float roll_cumulative_change_angle;
 float pitch_cumulative_change_angle;
 float yaw_cumulative_change_angle;
-
 
 
 /** 累计角度计算过程变量 **/
@@ -39,10 +37,9 @@ float yaw_res1, yaw_res2;
 float roll_change, pitch_change, yaw_change;
 
 
-
 /**
  * @description: CH110累计角度计算
- * @return {*}
+ * @return {void}
  */
 void CH110_cumulative_update(void)
 {

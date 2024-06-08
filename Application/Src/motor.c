@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 19:45:03
+ * @LastEditTime: 2024-06-08 19:51:02
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\motor.c
  * @Description: 电机的一些内存和数据处理函数函数
  * 
@@ -39,7 +39,7 @@ struct vision_angle_cascade_t* vision_angle_cascade_list[motor_count];
  * @description: 电机添加
  * @param {uint32_t} RecId 接收ID
  * @param {uint32_t} SendId 发送ID
- * @return {*}
+ * @return {void}
  */
 void add_motor( uint32_t RecId, uint32_t SendId )
 {
@@ -65,7 +65,7 @@ void add_motor( uint32_t RecId, uint32_t SendId )
  * @description: 申请内存空间
  * @param {uint8_t} index 索引
  * @param {enum PID_type_t} type PID计算类型
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t request_structure_memory( uint8_t index, enum PID_type_t type )
 {	
@@ -165,7 +165,7 @@ int8_t request_structure_memory( uint8_t index, enum PID_type_t type )
 /**
  * @description: 内存释放
  * @param {uint8_t} index 索引
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t release_structure_memory( uint8_t index)
 {
@@ -221,7 +221,7 @@ int8_t release_structure_memory( uint8_t index)
 /**
  * @description: 将需要旋转的角度转换为电机角度(0-8191)
  * @param {int32_t} value 值
- * @return {*}
+ * @return {uint16_t} 处理后的值(0-8191)
  */
 uint16_t absolute_angle_remainder( int32_t value )
 {
@@ -238,7 +238,7 @@ uint16_t absolute_angle_remainder( int32_t value )
 /**
  * @description: 清除指定ID电机的累计旋转角度
  * @param {uint32_t} RecId 接收ID
- * @return {*}
+ * @return {void}
  */
 void motor_angle_sum_clear( uint32_t RecId )
 {
@@ -266,7 +266,7 @@ void motor_angle_sum_clear( uint32_t RecId )
 /**
  * @description: 算出电机相对于上一次所改变的角度
  * @param {uint8_t} index 索引
- * @return {*}
+ * @return {void}
  */
 void angle_change_clac(uint8_t index)
 {

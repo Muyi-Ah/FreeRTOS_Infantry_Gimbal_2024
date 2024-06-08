@@ -21,7 +21,7 @@ uint8_t tx_data_0x2FF[8];
 
 /**
  * @description: can启动接收
- * @return {*}
+ * @return {void}
  */
 void can_manage_init(void)
 {
@@ -74,7 +74,7 @@ void can_manage_init(void)
 /**
  * @description: can中断回调
  * @param {CAN_HandleTypeDef*} hcan can实例指针
- * @return {*}
+ * @return {void}
  */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
 {
@@ -197,7 +197,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
 /**
  * @description: 0x200发送ID数据encode
  * @param {uint8_t} index 索引
- * @return {*}
+ * @return {void}
  */
 static void __0x200_Encode( uint8_t index )
 {
@@ -224,7 +224,7 @@ static void __0x200_Encode( uint8_t index )
 /**
  * @description: 0x1FF发送ID数据encode
  * @param {uint8_t} index 索引
- * @return {*}
+ * @return {void}
  */
 static void __0x1FF_Encode( uint8_t index )
 {
@@ -251,7 +251,7 @@ static void __0x1FF_Encode( uint8_t index )
 /**
  * @description: 0x2FF发送ID数据encode
  * @param {uint8_t} index 索引
- * @return {*}
+ * @return {void}
  */
 static void __0x2FF_Encode( uint8_t index )
 {
@@ -274,7 +274,7 @@ static void __0x2FF_Encode( uint8_t index )
 /**
  * @description: 电机报文发送
  * @param {CAN_HandleTypeDef} CanHandle can实例
- * @return {*}
+ * @return {void}
  */
 void motor_control_send( CAN_HandleTypeDef CanHandle )
 {

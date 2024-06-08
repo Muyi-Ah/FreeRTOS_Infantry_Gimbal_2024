@@ -31,7 +31,7 @@ int8_t RecId_find(uint32_t RecId)
  * @description: int16类型限幅
  * @param {int16_t} amt 输入值
  * @param {int16_t} limit 幅值
- * @return {*}
+ * @return {int16_t} 处理后的值
  */
 int16_t limit_int16_t(int16_t amt, int16_t limit)
 {
@@ -49,7 +49,7 @@ int16_t limit_int16_t(int16_t amt, int16_t limit)
  * @param {int32_t} amt 积分值
  * @param {int16_t} add 误差值
  * @param {int32_t} limit 限幅值
- * @return {*}
+ * @return {int32_t} 处理后的值
  */
 int32_t cumulative_limit_int16_t(int32_t amt, int16_t add, int32_t limit)
 {
@@ -66,7 +66,7 @@ int32_t cumulative_limit_int16_t(int32_t amt, int16_t add, int32_t limit)
  * @param {int32_t} amt 积分值
  * @param {int32_t} add 误差值
  * @param {int32_t} limit 限幅值
- * @return {*}
+ * @return {int32_t} 处理后的值
  */
 int32_t cumulative_limit_int32_t(int32_t amt, int32_t add, int32_t limit)
 {
@@ -82,7 +82,7 @@ int32_t cumulative_limit_int32_t(int32_t amt, int32_t add, int32_t limit)
  * @description: 输出限幅
  * @param {int32_t} amt 输入值
  * @param {int16_t} limit 限幅值
- * @return {*}
+ * @return {int16_t} 处理后的值
  */
 int16_t output_limit(int32_t amt, int16_t limit)
 {
@@ -101,7 +101,7 @@ int16_t output_limit(int32_t amt, int16_t limit)
  * @param {int16_t} target_value 目标值
  * @param {int16_t} target_value_max 目标值限幅
  * @param {PID_param_struct_t} structure PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t rotating_speed_calculation(uint32_t RecId,
                                   int16_t target_value,
@@ -179,7 +179,7 @@ int8_t rotating_speed_calculation(uint32_t RecId,
  * @param {int32_t} CW_angle_max 顺时针旋转最大值(8192制)
  * @param {int32_t} CCW_angle_max 逆时针旋转最大值(8192制)
  * @param {PID_param_struct_t} structure PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t relative_angle_calculation(uint32_t RecId,
                                   int32_t target_value,
@@ -285,7 +285,7 @@ int8_t relative_angle_calculation(uint32_t RecId,
  * @param {uint16_t} target_value 目标值(0-8191)
  * @param {enum direction} direct 转动方向
  * @param {PID_param_struct_t} structure PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t absolute_angle_calculation(uint32_t RecId,
                                   uint16_t target_value,
@@ -423,7 +423,7 @@ int8_t absolute_angle_calculation(uint32_t RecId,
  * @param {enum direction} direct 旋转方向
  * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
  * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t absolute_angle_cascade_calculation(uint32_t RecId,
                                           uint16_t target_value,
@@ -594,7 +594,7 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
  * @param {int32_t} CCW_angle_max 逆时针旋转最大值
  * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
  * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t relative_angle_cascade_calculation(uint32_t RecId,
                                           int32_t target_value,
@@ -740,7 +740,7 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
  * @param {uint8_t} output_inversion 输出是否反向
  * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
  * @param {secondary_PID_param_struct_t} secondary_structure 内环PID结构体
- * @return {*}
+ * @return {int8_t} 错误值
  */
 int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
                                             int32_t target_value,

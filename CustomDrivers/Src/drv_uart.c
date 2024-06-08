@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 19:47:34
+ * @LastEditTime: 2024-06-08 20:01:39
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_uart.c
  * @Description: 串口数据处理
  * 
@@ -16,7 +16,7 @@ uint8_t remote_rx_buf[remote_data_size];
 
 /**
  * @description: 串口启动接收
- * @return {*}
+ * @return {void}
  */
 void uart_manage_init(void)
 {
@@ -31,7 +31,7 @@ void uart_manage_init(void)
  * @param {UART_HandleTypeDef*} huart 串口实例指针
  * @param {uint8_t*} pBuffer 数据列表
  * @param {uint16_t} Lenght 长度
- * @return {*}
+ * @return {void}
  */
 void uart_msg_send(UART_HandleTypeDef* huart, uint8_t* pBuffer, uint16_t Lenght)
 {
@@ -45,7 +45,7 @@ void uart_msg_send(UART_HandleTypeDef* huart, uint8_t* pBuffer, uint16_t Lenght)
  * @description: 串口回调函数
  * @param {UART_HandleTypeDef*} huart 串口实例指针
  * @param {uint16_t} Size 大小
- * @return {*}
+ * @return {void}
  */
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size)
 {

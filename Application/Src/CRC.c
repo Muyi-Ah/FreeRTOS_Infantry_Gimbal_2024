@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 19:40:06
+ * @LastEditTime: 2024-06-08 19:54:44
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\CRC.c
  * @Description: 用于裁判系统数据校验的CRC8和CRC16
  *
@@ -35,7 +35,7 @@ const unsigned char CRC8_TAB[256] = {
  * @param {unsigned char} *pchMessage
  * @param {unsigned int} dwLength
  * @param {unsigned char} ucCRC8
- * @return {*}
+ * @return {unsigned char} CRC8校验和
  */
 unsigned char Get_CRC8_Check_Sum(unsigned char* pchMessage, unsigned int dwLength, unsigned char ucCRC8)
 {
@@ -52,7 +52,7 @@ unsigned char Get_CRC8_Check_Sum(unsigned char* pchMessage, unsigned int dwLengt
  * @description: 校验CRC8
  * @param {unsigned char} *pchMessage
  * @param {unsigned int} dwLength
- * @return {*}
+ * @return {unsigned int} 1表示示校验通过，0表示校验失败
  */
 unsigned int Verify_CRC8_Check_Sum(unsigned char* pchMessage, unsigned int dwLength)
 {
@@ -68,7 +68,7 @@ unsigned int Verify_CRC8_Check_Sum(unsigned char* pchMessage, unsigned int dwLen
  * @description: 添加CRC8校验和
  * @param {unsigned char} *pchMessage
  * @param {unsigned int} dwLength
- * @return {*}
+ * @return {void}
  */
 void Append_CRC8_Check_Sum(unsigned char* pchMessage, unsigned int dwLength)
 {
@@ -108,7 +108,7 @@ const uint16_t wCRC_Table[256] = {
  * @param {uint8_t} *pchMessage
  * @param {uint32_t} dwLength
  * @param {uint16_t} wCRC
- * @return {*}
+ * @return {uint16_t} CRC16校验和
  */
 uint16_t Get_CRC16_Check_Sum(uint8_t* pchMessage, uint32_t dwLength, uint16_t wCRC)
 {
@@ -128,7 +128,7 @@ uint16_t Get_CRC16_Check_Sum(uint8_t* pchMessage, uint32_t dwLength, uint16_t wC
  * @description: 校验CRC16
  * @param {uint8_t} *pchMessage
  * @param {uint32_t} dwLength
- * @return {*}
+ * @return {uint32_t} 1表示示校验通过，0表示校验失败
  */
 uint32_t Verify_CRC16_Check_Sum(uint8_t* pchMessage, uint32_t dwLength)
 {
@@ -145,7 +145,7 @@ uint32_t Verify_CRC16_Check_Sum(uint8_t* pchMessage, uint32_t dwLength)
  * @description: 添加CRC16校验和
  * @param {uint8_t *} pchMessage
  * @param {uint32_t} dwLength
- * @return {*}
+ * @return {void}
  */
 void Append_CRC16_Check_Sum(uint8_t* pchMessage, uint32_t dwLength)
 {

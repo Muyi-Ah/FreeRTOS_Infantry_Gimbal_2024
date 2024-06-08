@@ -16,7 +16,7 @@ RecMsg_t RecMsg;
 
 /**
  * @description: 遥控器数据初始化
- * @return {*}
+ * @return {void}
  */
 void remote_init(void)
 {
@@ -30,7 +30,7 @@ void remote_init(void)
 /**
  * @description: 遥控器数据更新
  * @param {uint8_t} rx_buf 数据列表
- * @return {*}
+ * @return {void}
  */
 void remote_data_update(uint8_t rx_buf[remote_data_size])
 {

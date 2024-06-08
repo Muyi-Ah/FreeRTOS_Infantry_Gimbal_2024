@@ -13,7 +13,7 @@
 /**
  * @description: 状态机初始化
  * @param {StateMachine} *sm 状态机结构体指针
- * @return {*}
+ * @return {void}
  */
 void StateMachine_Init(StateMachine* sm)
 {
@@ -25,7 +25,7 @@ void StateMachine_Init(StateMachine* sm)
  * @description: 状态切换
  * @param {StateMachine*} sm 状态机结构体指针
  * @param {Event} event 状态事件
- * @return {*}
+ * @return {void}
  */
 void StateMachine_HandleEvent(StateMachine* sm, Event event)
 {
