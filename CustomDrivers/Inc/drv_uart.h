@@ -18,6 +18,7 @@
 #include "usart.h"
 
 /*用户头文件引用*/
+#include "communication.h"
 #include "error_detection.h"
 #include "remote.h"
 #include "sys_config.h"

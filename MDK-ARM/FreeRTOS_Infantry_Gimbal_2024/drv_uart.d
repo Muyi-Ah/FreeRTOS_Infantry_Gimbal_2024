@@ -25,5 +25,6 @@ freertos_infantry_gimbal_2024/drv_uart.o: ..\CustomDrivers\Src\drv_uart.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Application\Inc\sys_config.h ..\Application\Inc\error_detection.h \
-  ..\Application\Inc\remote.h
+  ..\Application\Inc\communication.h ..\Application\Inc\simple_verify.h \
+  ..\Application\Inc\sys_config.h ..\Core\Inc\can.h \
+  ..\Application\Inc\error_detection.h ..\Application\Inc\remote.h
