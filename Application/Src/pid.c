@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 11:03:32
+ * @LastEditTime: 2024-06-08 17:21:55
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\pid.c
  * @Description:
  *
@@ -187,11 +187,11 @@ int8_t relative_angle_calculation(uint32_t RecId,
                                   int32_t CCW_angle_max,
                                   PID_param_struct_t structure)
 {
-    struct relative_angle_t* pStruture = NULL;
-    int32_t local_pid_result           = 0;
-    int32_t res1 = 0, res2 = 0;
+    struct relative_angle_t* pStruture   = NULL;
+    int32_t local_pid_result             = 0;
     int32_t mechanical_angle_change      = 0;
     int32_t real_mechanical_angle_change = 0;
+    int32_t res1 = 0, res2 = 0;
 
     int8_t index = RecId_find(RecId);
 
@@ -606,9 +606,9 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
     struct relative_angle_cascade_t* pStruture = NULL;
     int32_t primary_pid_result                 = 0;
     int32_t secondary_pid_result               = 0;
-    int32_t res1 = 0, res2 = 0;
     int32_t mechanical_angle_change      = 0;
     int32_t real_mechanical_angle_change = 0;
+    int32_t res1 = 0, res2 = 0;
 
     int8_t index = RecId_find(RecId);
 
