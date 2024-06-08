@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 11:12:54
+ * @LastEditTime: 2024-06-08 20:07:06
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Inc\drv_can.h
  * @Description:
  *
