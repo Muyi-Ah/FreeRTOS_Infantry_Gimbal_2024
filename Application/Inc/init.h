@@ -7,10 +7,6 @@
 #include "drv_uart.h"
 #include "remote.h"
 
-/*结构体外部声明*/
-
-extern StateMachine state_machine;
-
 
 /*函数外部声明*/
 

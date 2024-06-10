@@ -2,11 +2,11 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 09:03:22
+ * @LastEditTime: 2024-06-10 22:51:41
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\error_detection.c
  * @Description: 错误检测
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "error_detection.h"
 
@@ -23,3 +23,11 @@ uint8_t remote_error;
 
 uint8_t communication_online_reply;
 uint8_t communication_error;
+
+void ErrorDetection_Task(void* argument)
+{
+    for (;;) {
+        // 延时1ms
+        osDelay(1);
+    }
+}

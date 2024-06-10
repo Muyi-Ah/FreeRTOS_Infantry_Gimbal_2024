@@ -16,7 +16,9 @@
 			"config.h": "c",
 			"referee.h": "c",
 			"gimbal.h": "c",
-			"state_machine.h": "c"
+			"state_machine.h": "c",
+			"remote.h": "c",
+			"error_detection.h": "c"
 		}
 	}
 }

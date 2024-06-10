@@ -2,13 +2,19 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 08:02:47
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 17:35:41
+ * @LastEditTime: 2024-06-11 01:09:27
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\state_machine.c
  * @Description: 状态机
  *
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "state_machine.h"
+
+
+/*创建变量*/
+
+/// @brief 状态机
+StateMachine state_machine;
 
 
 /**

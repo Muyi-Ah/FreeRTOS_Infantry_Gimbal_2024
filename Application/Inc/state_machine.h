@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 08:03:18
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 17:30:13
+ * @LastEditTime: 2024-06-10 22:10:52
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\state_machine.h
  * @Description:
  *
@@ -52,10 +52,25 @@ typedef enum {
 /*结构体定义*/
 
 typedef struct state_machine {
+    //状态
     MainState currentState;
     SubState currentSubState;
+    //时间戳
+    uint32_t enterMode11Time;
+    uint32_t enterMode12Time;
+    uint32_t enterMode13Time;
+    uint32_t enterMode21Time;
+    uint32_t enterMode22Time;
+    uint32_t enterMode23Time;
+    uint32_t enterMode31Time;
+    uint32_t enterMode32Time;
+    uint32_t enterMode33Time;
 } StateMachine;
 
+
+/*结构体外部声明*/
+
+extern StateMachine state_machine;
 
 
 /*函数外部声明*/
