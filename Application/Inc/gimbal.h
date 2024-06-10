@@ -14,5 +14,12 @@
 /*标准库引用*/
 #include "stdint.h"
 
+/*FreeRTOS引用*/
+#include "FreeRTOS.h"
+
+/*用户头文件引用*/
+#include "sys_config.h"
+#include "drv_uart.h"
+#include "state_machine.h"
 
 #endif /*GIMBAL_H*/

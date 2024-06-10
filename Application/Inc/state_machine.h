@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 08:03:18
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 08:51:36
+ * @LastEditTime: 2024-06-10 17:30:13
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\state_machine.h
  * @Description:
  *

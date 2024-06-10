@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 13:37:21
+ * @LastEditTime: 2024-06-10 17:21:45
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Inc\drv_uart.h
  * @Description:
  *
@@ -23,6 +23,11 @@
 #include "remote.h"
 #include "sys_config.h"
 
+
+/*变量外部声明*/
+
+extern uint8_t remote_rx_buf[REMOTE_DATA_SIZE];
+extern uint8_t communication_rx_buf[COMMUNICATION_RECEIVE_DATA_SIZE];
 
 /* 函数外部声明 */
 

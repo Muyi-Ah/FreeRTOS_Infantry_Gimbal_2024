@@ -2,13 +2,14 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 08:02:47
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-09 00:30:32
+ * @LastEditTime: 2024-06-10 17:35:41
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\state_machine.c
  * @Description: 状态机
  *
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "state_machine.h"
+
 
 /**
  * @description: 状态机初始化
@@ -20,6 +21,7 @@ void StateMachine_Init(StateMachine* sm)
     sm->currentState    = STATE_INIT;
     sm->currentSubState = SUBSTATE_NONE;
 }
+
 
 /**
  * @description: 状态切换

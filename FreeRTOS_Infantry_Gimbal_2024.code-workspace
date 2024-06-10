@@ -14,7 +14,9 @@
 			"drv_can.h": "c",
 			"sys_config.h": "c",
 			"config.h": "c",
-			"referee.h": "c"
+			"referee.h": "c",
+			"gimbal.h": "c",
+			"state_machine.h": "c"
 		}
 	}
 }
