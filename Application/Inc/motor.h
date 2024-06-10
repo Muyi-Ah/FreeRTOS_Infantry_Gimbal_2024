@@ -25,7 +25,9 @@
 #include "error_codes.h"
 #include "sys_config.h"
 
+
 /* 枚举定义 */
+
 enum PID_type_t {
     nothing,
     rotating_speed,
@@ -40,6 +42,7 @@ enum PID_type_t {
 
 
 /* 结构体定义 */
+
 struct motor_info_t {
     enum PID_type_t PID_type;
     void* PID_structure_addr;
@@ -152,17 +155,21 @@ struct vision_angle_cascade_t {
     int32_t secondary_cumulative_error;
 };
 
+
 /* 结构体指针列表外部声明 */
-extern struct motor_info_t* motor_info_list[motor_count];
-extern struct rotating_speed_t* rotating_speed_list[motor_count];
-extern struct relative_angle_t* relative_angle_list[motor_count];
-extern struct absolute_angle_t* absolute_angle_list[motor_count];
-extern struct relative_angle_cascade_t* relative_angle_cascade_list[motor_count];
-extern struct absolute_angle_cascade_t* absolute_angle_cascade_list[motor_count];
-extern struct gyro_angle_cascade_t* gyro_angle_cascade_list[motor_count];
-extern struct vision_angle_cascade_t* vision_angle_cascade_list[motor_count];
+
+extern struct motor_info_t* motor_info_list[MOTOR_COUNT];
+extern struct rotating_speed_t* rotating_speed_list[MOTOR_COUNT];
+extern struct relative_angle_t* relative_angle_list[MOTOR_COUNT];
+extern struct absolute_angle_t* absolute_angle_list[MOTOR_COUNT];
+extern struct relative_angle_cascade_t* relative_angle_cascade_list[MOTOR_COUNT];
+extern struct absolute_angle_cascade_t* absolute_angle_cascade_list[MOTOR_COUNT];
+extern struct gyro_angle_cascade_t* gyro_angle_cascade_list[MOTOR_COUNT];
+extern struct vision_angle_cascade_t* vision_angle_cascade_list[MOTOR_COUNT];
+
 
 /* 函数外部声明 */
+
 void add_motor(uint32_t RecId, uint32_t SendId);
 int8_t request_structure_memory(uint8_t index, enum PID_type_t type);
 int8_t release_structure_memory(uint8_t index);

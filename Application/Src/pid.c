@@ -18,7 +18,7 @@
  */
 int8_t RecId_find(uint32_t RecId)
 {
-    for (uint8_t index = 0; index < motor_count; index++) {
+    for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
         if (motor_info_list[index]->RecId == RecId) {
             return index;
         }

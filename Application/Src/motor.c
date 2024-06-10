@@ -24,14 +24,14 @@ uint8_t vision_angle_cascade_count;
 
 /*电机 & PID结构体指针列表创建*/
 
-struct motor_info_t* motor_info_list[motor_count];
-struct rotating_speed_t* rotating_speed_list[motor_count];
-struct relative_angle_t* relative_angle_list[motor_count];
-struct absolute_angle_t* absolute_angle_list[motor_count];
-struct relative_angle_cascade_t* relative_angle_cascade_list[motor_count];
-struct absolute_angle_cascade_t* absolute_angle_cascade_list[motor_count];
-struct gyro_angle_cascade_t* gyro_angle_cascade_list[motor_count];
-struct vision_angle_cascade_t* vision_angle_cascade_list[motor_count];
+struct motor_info_t* motor_info_list[MOTOR_COUNT];
+struct rotating_speed_t* rotating_speed_list[MOTOR_COUNT];
+struct relative_angle_t* relative_angle_list[MOTOR_COUNT];
+struct absolute_angle_t* absolute_angle_list[MOTOR_COUNT];
+struct relative_angle_cascade_t* relative_angle_cascade_list[MOTOR_COUNT];
+struct absolute_angle_cascade_t* absolute_angle_cascade_list[MOTOR_COUNT];
+struct gyro_angle_cascade_t* gyro_angle_cascade_list[MOTOR_COUNT];
+struct vision_angle_cascade_t* vision_angle_cascade_list[MOTOR_COUNT];
 
 
 
@@ -242,7 +242,7 @@ uint16_t absolute_angle_remainder( int32_t value )
  */
 void motor_angle_sum_clear( uint32_t RecId )
 {
-	for( uint8_t index = 0; index < motor_count; index++ )
+	for( uint8_t index = 0; index < MOTOR_COUNT; index++ )
 	{
 		if( motor_info_list[index]->RecId == RecId )
 			motor_info_list[index]->angle_change_sum = 0;
@@ -252,7 +252,7 @@ void motor_angle_sum_clear( uint32_t RecId )
 /* 获取指定ID电机的累计旋转角度（不知为何极其的慢） */
 // int32_t get_motor_angle_sum( uint32_t RecId )
 // {
-// 	for( uint8_t index = 0; index < motor_count; index++ )
+// 	for( uint8_t index = 0; index < MOTOR_COUNT; index++ )
 // 	{
 // 		if( motor_info_list[index]->RecId == RecId )
 // 		{

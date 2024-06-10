@@ -49,6 +49,8 @@
 "freertos_infantry_gimbal_2024\remote.o"
 "freertos_infantry_gimbal_2024\ui.o"
 "freertos_infantry_gimbal_2024\vision.o"
+"freertos_infantry_gimbal_2024\simple_verify.o"
+"freertos_infantry_gimbal_2024\state_machine.o"
 "freertos_infantry_gimbal_2024\drv_can.o"
 "freertos_infantry_gimbal_2024\drv_uart.o"
 --strict --scatter "FreeRTOS_Infantry_Gimbal_2024\FreeRTOS_Infantry_Gimbal_2024.sct"

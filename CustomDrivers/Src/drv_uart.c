@@ -2,17 +2,18 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 20:01:39
+ * @LastEditTime: 2024-06-09 00:16:23
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_uart.c
  * @Description: 串口数据处理
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "drv_uart.h"
 
 /* 创建变量 */
-uint8_t remote_rx_buf[remote_data_size];
 
+uint8_t remote_rx_buf[REMOTE_DATA_SIZE];
+uint8_t communication_rx_buf[COMMUNICATION_RECEIVE_DATA_SIZE];
 
 /**
  * @description: 串口启动接收
@@ -20,9 +21,9 @@ uint8_t remote_rx_buf[remote_data_size];
  */
 void uart_manage_init(void)
 {
-    HAL_UARTEx_ReceiveToIdle_IT(&remote_uart, remote_rx_buf, remote_data_size);
-    // HAL_UARTEx_ReceiveToIdle_IT( &communication_uart, communication_rx_buf, communication_receive_data_size );
-    // HAL_UARTEx_ReceiveToIdle_IT( &vision_uart, vision_rx_buf, vision_receive_data_size );
+    HAL_UARTEx_ReceiveToIdle_DMA(&REMOTE_UART, remote_rx_buf, REMOTE_DATA_SIZE);
+    HAL_UARTEx_ReceiveToIdle_DMA(&COMMUNICATE_UART, communication_rx_buf, COMMUNICATION_RECEIVE_DATA_SIZE);
+    // HAL_UARTEx_ReceiveToIdle_IT( &VISION_UART, vision_rx_buf, vision_receive_data_size );
 }
 
 
@@ -36,7 +37,7 @@ void uart_manage_init(void)
 void uart_msg_send(UART_HandleTypeDef* huart, uint8_t* pBuffer, uint16_t Lenght)
 {
     // taskENTER_CRITICAL();
-    HAL_UART_Transmit_IT(huart, pBuffer, Lenght);
+    HAL_UART_Transmit_DMA(huart, pBuffer, Lenght);
     // taskEXIT_CRITICAL();
 }
 
@@ -50,16 +51,28 @@ void uart_msg_send(UART_HandleTypeDef* huart, uint8_t* pBuffer, uint16_t Lenght)
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef* huart, uint16_t Size)
 {
     /* 遥控器实例 */
-    if (huart->Instance == remote_uart.Instance) {
+    if (huart->Instance == REMOTE_UART.Instance) {
         /* 更新遥控器数据 */
         remote_data_update(remote_rx_buf);
 
         /* 重新启动接收 */
-        HAL_UARTEx_ReceiveToIdle_IT(&remote_uart, remote_rx_buf, remote_data_size);
+        HAL_UARTEx_ReceiveToIdle_DMA(&REMOTE_UART, remote_rx_buf, REMOTE_DATA_SIZE);
 
         /* 遥控器在线标志位 */
         remote_online_reply = 1U;
     }
+    /* 板间通信实例 */
+    else if (huart->Instance == COMMUNICATE_UART.Instance) {
+        /* 更新通信数据 */
+        CommunicationData_Update(communication_rx_buf);
+
+        /* 重新启动接收 */
+        HAL_UARTEx_ReceiveToIdle_DMA(&COMMUNICATE_UART, communication_rx_buf, COMMUNICATION_RECEIVE_DATA_SIZE);
+
+        /* 板间通信在线标志位 */
+        communication_online_reply = 1U;
+    }
+
 
     /* 上下板通信和视觉通信先不写 */
 }

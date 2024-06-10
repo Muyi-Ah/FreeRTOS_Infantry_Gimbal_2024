@@ -25,7 +25,9 @@ freertos_infantry_gimbal_2024/drv_can.o: ..\CustomDrivers\Src\drv_can.c \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_tim_ex.h \
   ..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h \
-  ..\Application\Inc\sys_config.h ..\Application\Inc\motor.h \
+  ..\Application\Inc\CH110.h ..\Application\Inc\error_detection.h \
+  ..\Application\Inc\sys_config.h ..\Core\Inc\usart.h \
+  ..\Application\Inc\motor.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\FreeRTOS.h \
   ..\Core\Inc\FreeRTOSConfig.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\projdefs.h \
@@ -33,5 +35,4 @@ freertos_infantry_gimbal_2024/drv_can.o: ..\CustomDrivers\Src\drv_can.c \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\deprecated_definitions.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\portable\RVDS\ARM_CM4F\portmacro.h \
   ..\Middlewares\Third_Party\FreeRTOS\Source\include\mpu_wrappers.h \
-  ..\Application\Inc\error_codes.h ..\Application\Inc\CH110.h \
-  ..\Application\Inc\error_detection.h
+  ..\Application\Inc\error_codes.h

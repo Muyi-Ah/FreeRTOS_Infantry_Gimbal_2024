@@ -19,7 +19,9 @@
 /*用户头文件引用*/
 #include "sys_config.h"
 
+
 /* 结构体定义 */
+
 typedef struct {
     struct {
         uint16_t ch0;
@@ -62,6 +64,7 @@ typedef struct {
 
 } RecMsg_t;
 
+
 /* 结构体外部声明 */
 
 extern RecMsg_t RecMsg;
@@ -70,6 +73,6 @@ extern RecMsg_t RecMsg;
 /* 函数外部声明 */
 
 void remote_init(void);
-void remote_data_update(uint8_t rx_buf[remote_data_size]);
+void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE]);
 
 #endif /*REMOTE_H*/

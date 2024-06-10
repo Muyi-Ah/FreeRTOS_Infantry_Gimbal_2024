@@ -32,7 +32,7 @@ void remote_init(void)
  * @param {uint8_t} rx_buf 数据列表
  * @return {void}
  */
-void remote_data_update(uint8_t rx_buf[remote_data_size])
+void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE])
 {
     RecMsg.remote.ch0 = (rx_buf[0] | rx_buf[1] << 8) & 0x07FF;
     RecMsg.remote.ch1 = (rx_buf[1] >> 3 | rx_buf[2] << 5) & 0x07FF;

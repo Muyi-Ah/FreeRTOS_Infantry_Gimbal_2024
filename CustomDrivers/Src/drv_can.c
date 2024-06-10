@@ -2,11 +2,11 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:26:38
+ * @LastEditTime: 2024-06-09 00:16:35
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_can.c
  * @Description: can报文数据处理
- * 
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved. 
+ *
+ * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
 #include "drv_can.h"
 
@@ -40,13 +40,13 @@ void can_manage_init(void)
     CAN_FilterInitStructure.SlaveStartFilterBank = 14;
 
     /* 配置CAN报文滤波器 */
-    HAL_CAN_ConfigFilter(&motor_can1, &CAN_FilterInitStructure);
+    HAL_CAN_ConfigFilter(&MOTOR_CAN1, &CAN_FilterInitStructure);
 
     /* 启动CAN_IT_RX_FIFO0_MSG_PENDING中断通知 */
-    HAL_CAN_ActivateNotification(&motor_can1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_ActivateNotification(&MOTOR_CAN1, CAN_IT_RX_FIFO0_MSG_PENDING);
 
     /* 启动CAN外设 */
-    HAL_CAN_Start(&motor_can1);
+    HAL_CAN_Start(&MOTOR_CAN1);
 
     /* can2 */
     CAN_FilterInitStructure.FilterIdHigh         = 0x0000;
@@ -79,15 +79,15 @@ void can_manage_init(void)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
 {
     /* 电机实例 */
-    if (hcan->Instance == motor_can1.Instance) {
+    if (hcan->Instance == MOTOR_CAN1.Instance) {
         /* 创建局部变量 */
         CAN_RxHeaderTypeDef rx_header;
         uint8_t rx_buf[8];
 
         /* 获取电机报文 */
-        HAL_CAN_GetRxMessage(&motor_can1, CAN_RX_FIFO0, &rx_header, rx_buf);
+        HAL_CAN_GetRxMessage(&MOTOR_CAN1, CAN_RX_FIFO0, &rx_header, rx_buf);
 
-        for (uint8_t index = 0; index < motor_count; index++) {
+        for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
             /* 标记电机在线 */
             if (motor_info_list[index]->RecId == rx_header.StdId) {
                 motor_info_list[index]->online_reply = 1U;
@@ -199,25 +199,21 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
  * @param {uint8_t} index 索引
  * @return {void}
  */
-static void __0x200_Encode( uint8_t index )
+static void __0x200_Encode(uint8_t index)
 {
-  
-	if( motor_info_list[index]->RecId == 0x201 ){
-		tx_data_0x200[0] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x200[1] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x202 ){
-		tx_data_0x200[2] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x200[3] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x203 ){
-		tx_data_0x200[4] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x200[5] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x204 ){
-		tx_data_0x200[6] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x200[7] = motor_info_list[index]->final_output;
-	}
+    if (motor_info_list[index]->RecId == 0x201) {
+        tx_data_0x200[0] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x200[1] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x202) {
+        tx_data_0x200[2] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x200[3] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x203) {
+        tx_data_0x200[4] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x200[5] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x204) {
+        tx_data_0x200[6] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x200[7] = motor_info_list[index]->final_output;
+    }
 }
 
 
@@ -226,25 +222,21 @@ static void __0x200_Encode( uint8_t index )
  * @param {uint8_t} index 索引
  * @return {void}
  */
-static void __0x1FF_Encode( uint8_t index )
+static void __0x1FF_Encode(uint8_t index)
 {
-  
-	if( motor_info_list[index]->RecId == 0x205 ){
-		tx_data_0x1FF[0] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x1FF[1] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x206 ){
-		tx_data_0x1FF[2] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x1FF[3] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x207 ){
-		tx_data_0x1FF[4] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x1FF[5] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x208 ){
-		tx_data_0x1FF[6] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x1FF[7] = motor_info_list[index]->final_output;
-	}
+    if (motor_info_list[index]->RecId == 0x205) {
+        tx_data_0x1FF[0] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x1FF[1] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x206) {
+        tx_data_0x1FF[2] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x1FF[3] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x207) {
+        tx_data_0x1FF[4] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x1FF[5] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x208) {
+        tx_data_0x1FF[6] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x1FF[7] = motor_info_list[index]->final_output;
+    }
 }
 
 
@@ -253,21 +245,18 @@ static void __0x1FF_Encode( uint8_t index )
  * @param {uint8_t} index 索引
  * @return {void}
  */
-static void __0x2FF_Encode( uint8_t index )
+static void __0x2FF_Encode(uint8_t index)
 {
-  
-	if( motor_info_list[index]->RecId == 0x209 ){
-		tx_data_0x2FF[0] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x2FF[1] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x20A ){
-		tx_data_0x2FF[2] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x2FF[3] = motor_info_list[index]->final_output;
-	}
-	else if( motor_info_list[index]->RecId == 0x20B ){
-		tx_data_0x2FF[4] = motor_info_list[index]->final_output >> 8;
-		tx_data_0x2FF[5] = motor_info_list[index]->final_output;
-	}
+    if (motor_info_list[index]->RecId == 0x209) {
+        tx_data_0x2FF[0] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x2FF[1] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x20A) {
+        tx_data_0x2FF[2] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x2FF[3] = motor_info_list[index]->final_output;
+    } else if (motor_info_list[index]->RecId == 0x20B) {
+        tx_data_0x2FF[4] = motor_info_list[index]->final_output >> 8;
+        tx_data_0x2FF[5] = motor_info_list[index]->final_output;
+    }
 }
 
 
@@ -276,39 +265,38 @@ static void __0x2FF_Encode( uint8_t index )
  * @param {CAN_HandleTypeDef} CanHandle can实例
  * @return {void}
  */
-void motor_control_send( CAN_HandleTypeDef CanHandle )
+void motor_control_send(CAN_HandleTypeDef CanHandle)
 {
-	// xSemaphoreTake( xCAN1_Semaphore, portMAX_DELAY );
-	CAN_TxHeaderTypeDef tx_header[2];
-	
-	tx_header[0].StdId = 0x200;
-	tx_header[0].ExtId = 0;
-	tx_header[0].IDE = CAN_ID_STD;
-	tx_header[0].RTR = CAN_RTR_DATA;
-	tx_header[0].DLC = 8;
-	tx_header[0].TransmitGlobalTime = DISABLE;
-	
-	tx_header[1].StdId = 0x1FF;
-	tx_header[1].ExtId = 0;
-	tx_header[1].IDE = CAN_ID_STD;
-	tx_header[1].RTR = CAN_RTR_DATA;
-	tx_header[1].DLC = 8;
-	tx_header[1].TransmitGlobalTime = DISABLE;
-	
-	for( uint8_t index = 0; index < motor_count; index++ )
-	{
-		if( motor_info_list[index]->SendId == 0x200 )
-			__0x200_Encode( index );
-		
-		else if( motor_info_list[index]->SendId == 0x1FF )
-			__0x1FF_Encode( index );
-	}
-	
-	if( HAL_CAN_GetTxMailboxesFreeLevel( &CanHandle ) )
-		HAL_CAN_AddTxMessage( &CanHandle, &tx_header[0], tx_data_0x200, ( uint32_t*) CAN_TX_MAILBOX0 );
-	
-	if( HAL_CAN_GetTxMailboxesFreeLevel( &CanHandle ) )
-		HAL_CAN_AddTxMessage( &CanHandle, &tx_header[1], tx_data_0x1FF, ( uint32_t*) CAN_TX_MAILBOX0 );
-	
-	// xSemaphoreGive( xCAN1_Semaphore );
+    // xSemaphoreTake( xCAN1_Semaphore, portMAX_DELAY );
+    CAN_TxHeaderTypeDef tx_header[2];
+
+    tx_header[0].StdId              = 0x200;
+    tx_header[0].ExtId              = 0;
+    tx_header[0].IDE                = CAN_ID_STD;
+    tx_header[0].RTR                = CAN_RTR_DATA;
+    tx_header[0].DLC                = 8;
+    tx_header[0].TransmitGlobalTime = DISABLE;
+
+    tx_header[1].StdId              = 0x1FF;
+    tx_header[1].ExtId              = 0;
+    tx_header[1].IDE                = CAN_ID_STD;
+    tx_header[1].RTR                = CAN_RTR_DATA;
+    tx_header[1].DLC                = 8;
+    tx_header[1].TransmitGlobalTime = DISABLE;
+
+    for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
+        if (motor_info_list[index]->SendId == 0x200)
+            __0x200_Encode(index);
+
+        else if (motor_info_list[index]->SendId == 0x1FF)
+            __0x1FF_Encode(index);
+    }
+
+    if (HAL_CAN_GetTxMailboxesFreeLevel(&CanHandle))
+        HAL_CAN_AddTxMessage(&CanHandle, &tx_header[0], tx_data_0x200, (uint32_t*)CAN_TX_MAILBOX0);
+
+    if (HAL_CAN_GetTxMailboxesFreeLevel(&CanHandle))
+        HAL_CAN_AddTxMessage(&CanHandle, &tx_header[1], tx_data_0x1FF, (uint32_t*)CAN_TX_MAILBOX0);
+
+    // xSemaphoreGive( xCAN1_Semaphore );
 }
