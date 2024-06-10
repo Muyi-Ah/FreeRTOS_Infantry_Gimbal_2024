@@ -19,7 +19,9 @@
 /*用户头文件引用*/
 #include "sys_config.h"
 
+
 /* 变量外部声明 */  
+
 extern uint8_t motor_error;
 extern uint8_t error_motor[MOTOR_COUNT];
 

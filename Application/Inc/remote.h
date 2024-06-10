@@ -19,7 +19,9 @@
 /*用户头文件引用*/
 #include "sys_config.h"
 
+
 /* 结构体定义 */
+
 typedef struct {
     struct {
         uint16_t ch0;
@@ -61,6 +63,7 @@ typedef struct {
     } KeyBoard;
 
 } RecMsg_t;
+
 
 /* 结构体外部声明 */
 

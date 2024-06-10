@@ -18,6 +18,7 @@
 #include "simple_verify.h"
 #include "sys_config.h"
 
+
 /*函数外部声明*/
 
 void CommunicationData_Update(uint8_t* rx_buf);
