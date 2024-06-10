@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 13:35:31
+ * @LastEditTime: 2024-06-10 13:45:20
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\pid.h
  * @Description:
  *
@@ -93,12 +93,12 @@ int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
                                             primary_PID_param_struct_t primary_structure,
                                             secondary_PID_param_struct_t secondary_structure);
 
-int8_t vision_angle_cascade_caculation(uint32_t RecId,
-                                       int32_t target_value,
-                                       enum euler_axis angular_velocity_axis,
-                                       enum speed_loop_data_source speed_src,
-                                       uint8_t output_inversion,
-                                       primary_PID_param_struct_t primary_structure,
-                                       secondary_PID_param_struct_t secondary_structure);
+// int8_t vision_angle_cascade_caculation(uint32_t RecId,
+//                                        int32_t target_value,
+//                                        enum euler_axis angular_velocity_axis,
+//                                        enum speed_loop_data_source speed_src,
+//                                        uint8_t output_inversion,
+//                                        primary_PID_param_struct_t primary_structure,
+//                                        secondary_PID_param_struct_t secondary_structure);
 
 #endif /*PID_H*/
