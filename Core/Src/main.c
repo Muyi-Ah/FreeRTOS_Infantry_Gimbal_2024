@@ -189,7 +189,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
   /* USER CODE BEGIN Callback 1 */
-
+  else if (htim->Instance == TIM6)
+  {
+    //用户回调函数
+    TIM6_Callback_Function();
+  }
+  
   /* USER CODE END Callback 1 */
 }
 

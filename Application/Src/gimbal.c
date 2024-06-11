@@ -2,19 +2,9 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 01:52:34
+ * @LastEditTime: 2024-06-11 13:52:39
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\gimbal.c
  * @Description:
- *
- * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
- */
-/*
- * @Author: Ryan Xavier 467030312@qq.com
- * @Date: 2024-06-08 04:22:03
- * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 01:15:12
- * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\gimbal.c
- * @Description: 云台任务
  *
  * Copyright (c) 2024 by Ryan Xavier, All Rights Reserved.
  */
@@ -175,7 +165,7 @@ void Gimbal_Task(void* argument)
                         DisableMotor(); // 关闭电机
                         break;
 
-                } /* switch main state end */
+                } /* switch sub state end */
                 break;
 
             default:

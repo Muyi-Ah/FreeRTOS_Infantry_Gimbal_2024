@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:21:11
+ * @LastEditTime: 2024-06-11 14:28:28
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\remote.h
  * @Description:
  *
@@ -18,6 +18,11 @@
 
 /*用户头文件引用*/
 #include "sys_config.h"
+#include "state_machine.h"
+
+
+//  ==== 拨杆枚举定义 ====
+typedef enum { Top = 1, Mid = 3, Bottom = 2 } ToggleSwitch;
 
 
 /* 结构体定义 */
@@ -72,7 +77,12 @@ extern RecMsg_t RecMsg;
 
 /* 函数外部声明 */
 
+/// @brief 遥控器数据初始化
+/// @param
 void remote_init(void);
+
+/// @brief 遥控器数据更新
+/// @param rx_buf 数据列表
 void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE]);
 
 #endif /*REMOTE_H*/

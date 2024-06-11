@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 11:05:35
+ * @LastEditTime: 2024-06-11 14:48:21
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\remote.c
  * @Description: 遥控器数据处理
  *
@@ -10,14 +10,10 @@
  */
 #include "remote.h"
 
-/* 创建结构体 */
+/// @brief 遥控器数据结构体
 RecMsg_t RecMsg;
 
 
-/**
- * @description: 遥控器数据初始化
- * @return {void}
- */
 void remote_init(void)
 {
     RecMsg.remote.ch0 = 1024;
@@ -27,11 +23,48 @@ void remote_init(void)
 }
 
 
-/**
- * @description: 遥控器数据更新
- * @param {uint8_t} rx_buf 数据列表
- * @return {void}
- */
+void StateMachine_SubState_Update(void)
+{
+    // 左侧拨杆
+    switch (RecMsg.remote.s1) {
+        case Top:
+            // 右侧拨杆
+            switch (RecMsg.remote.s2) {
+                case Top: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_11); break;
+                case Mid: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_12); break;
+                case Bottom: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_13); break;
+
+                default: break;
+            } /* s2 end */
+            break;
+
+        case Mid:
+            // 右侧拨杆
+            switch (RecMsg.remote.s2) {
+                case Top: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_21); break;
+                case Mid: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_22); break;
+                case Bottom: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_23); break;
+
+                default: break;
+            } /* s2 end */
+            break;
+
+        case Bottom:
+            // 右侧拨杆
+            switch (RecMsg.remote.s2) {
+                case Top: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_31); break;
+                case Mid: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_32); break;
+                case Bottom: StateMachine_HandleEvent(&state_machine, EVENT_SWITCH_MODE_33); break;
+
+                default: break;
+            } /* s2 end */
+            break;
+
+        default: break;
+    } /* s1 end */
+}
+
+
 void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE])
 {
     RecMsg.remote.ch0 = (rx_buf[0] | rx_buf[1] << 8) & 0x07FF;
@@ -50,4 +83,7 @@ void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE])
     RecMsg.mouse.press_right = rx_buf[13];
 
     RecMsg.KeyBoard.key_code = (rx_buf[14] | rx_buf[15] << 8);
+
+    // 状态机子状态更新
+    StateMachine_SubState_Update();
 }
