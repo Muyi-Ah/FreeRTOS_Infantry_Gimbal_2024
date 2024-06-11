@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 17:19:18
+ * @LastEditTime: 2024-06-11 23:53:02
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\sys_config.h
  * @Description: 一些配置选项
  *
@@ -17,7 +17,7 @@
 #define MOTOR_COUNT 8
 
 /*电机can*/
-#define MOTOR_CAN1 hcan1
+#define MOTOR_CAN hcan1
 
 /*IMU模块can*/
 #define CH110_can hcan2
@@ -47,6 +47,14 @@
 #define FRICTION_MOTOR1_ID 0x201
 #define FRICTION_MOTOR2_ID 0x202
 #define TRIGGER_MOTOR_ID 0x203
+
+//每次射击弹丸量
+#define SHOTS_PER_FIRE 2
+
+//YAW轴电机初始位置编码器值
+#define YAW_MOTOR_INITIAL_ENCODER_VALUE 4096
+//PITCH轴电机初始位置编码器值
+#define PITCH_MOTOR_INITIAL_ENCODER_VALUE 4096
 
 /* 电机旋转角度累计(启用宏定义则对对应ID电机进行累计计算) */
 // #define enable_angle_sum_clac_0x201

@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 20:25:35
+ * @LastEditTime: 2024-06-12 02:19:49
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\gimbal.c
  * @Description:
  *
@@ -134,6 +134,7 @@ void Gimbal_Task(void* argument)
         switch (state_machine.currentState) {
             // 初始化状态
             case STATE_INIT:
+                DisableMotor();                                                // 关闭电机
                 Robot_Init();                                                  // 初始化
                 StateMachine_HandleEvent(&state_machine, EVENT_START_RUNNING); // 切换到运行
                 break;
@@ -313,9 +314,9 @@ void SUBSTATE_MODE_32_Function(void)
         if (state_machine.Mode32Time == 0) {
             state_machine.Mode32Time = currentTime;
         }
-        // 每500ms一发弹丸
+        // 每500ms两发弹丸
         else if (currentTime - state_machine.Mode32Time >= 500) {
-            PIDTrigger_Target += 49152; // 假设使用M2006 P36且拨盘每圈6颗弹丸
+            PIDTrigger_Target += 49152 * SHOTS_PER_FIRE; // 假设使用M2006 P36且拨盘每圈6颗弹丸 :8192*36/6=49152
             state_machine.Mode32Time = currentTime;
         }
     }
@@ -384,5 +385,5 @@ void TimeStamp_Clear(void)
 /// @param
 void Theta_Update(void)
 {
-    /* code */
+    Theta = Calculate_Theta(GetMotorEncoderValue(YAW_MOTOR_ID), YAW_MOTOR_INITIAL_ENCODER_VALUE);
 }

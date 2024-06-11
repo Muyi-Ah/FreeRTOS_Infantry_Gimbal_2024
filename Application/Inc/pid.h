@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 13:45:20
+ * @LastEditTime: 2024-06-12 02:16:53
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\pid.h
  * @Description:
  *
@@ -62,7 +62,8 @@ int8_t rotating_speed_calculation(uint32_t RecId,
                                   PID_param_struct_t structure);
 
 int8_t relative_angle_calculation(uint32_t RecId,
-                                  int32_t target_value,
+                                  int32_t* target_value,
+                                  int32_t delta,
                                   int32_t CW_angle_max,
                                   int32_t CCW_angle_max,
                                   PID_param_struct_t structure);
@@ -73,7 +74,8 @@ int8_t absolute_angle_calculation(uint32_t RecId,
                                   PID_param_struct_t structure);
 
 int8_t relative_angle_cascade_calculation(uint32_t RecId,
-                                          int32_t target_value,
+                                          int32_t* target_value,
+                                          int32_t delta,
                                           int32_t CW_angle_max,
                                           int32_t CCW_angle_max,
                                           primary_PID_param_struct_t primary_structure,
@@ -86,7 +88,8 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
                                           secondary_PID_param_struct_t secondary_structure);
 
 int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
-                                            int32_t target_value,
+                                            int32_t* target_value,
+                                            int32_t delta,
                                             enum euler_axis angular_velocity_axis,
                                             enum speed_loop_data_source speed_src,
                                             uint8_t output_inversion,

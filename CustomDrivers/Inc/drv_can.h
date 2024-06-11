@@ -27,5 +27,6 @@
 /* 函数外部声明 */
 
 void can_manage_init(void);
+void motor_control_send(CAN_HandleTypeDef* CanHandle);
 
 #endif /*DRV_CAN_H*/

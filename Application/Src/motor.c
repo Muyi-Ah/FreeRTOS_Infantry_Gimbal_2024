@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 19:51:02
+ * @LastEditTime: 2024-06-12 00:25:54
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\motor.c
  * @Description: 电机的一些内存和数据处理函数函数
  *
@@ -287,10 +287,53 @@ void angle_change_clac(uint8_t index)
 
 
 /// @brief 清除电机输出
-/// @param  
+/// @param
 void MotorOutput_AllClear(void)
 {
     for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
         motor_info_list[index]->final_output = 0;
     }
+}
+
+
+/// @brief 获取指定ID电机的编码器值
+/// @param RecID 电机ID
+/// @return 编码器值
+uint16_t GetMotorEncoderValue(uint32_t RecID)
+{
+    for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
+        if (motor_info_list[index]->RecId == RecID)
+            return motor_info_list[index]->mechanical_angle;
+    }
+    return 0;
+}
+
+
+/// @brief 编码器值转角度值
+/// @param EncoderValue 编码器值(0-8191)
+/// @return 角度值(0-360)
+float Encoder_To_Angle(uint16_t EncoderValue)
+{
+    return ((float)EncoderValue / ENCODER_MAX) * FULL_ROTATION_DEGREES;
+}
+
+
+/// @brief 计算夹角
+/// @param EncoderValue 编码器值
+/// @param InitialValue theta为0时对应的编码器值
+/// @return 夹角
+float Calculate_Theta(uint16_t EncoderValue, uint16_t InitialValue)
+{
+    float currentAngle = Encoder_To_Angle(EncoderValue);
+    float initialAngle = Encoder_To_Angle(InitialValue);
+
+    float theta = currentAngle - initialAngle;
+
+    if (theta < 0) {
+        theta += FULL_ROTATION_DEGREES;
+    } else if (theta >= FULL_ROTATION_DEGREES) {
+        theta -= FULL_ROTATION_DEGREES;
+    }
+
+    return theta;
 }

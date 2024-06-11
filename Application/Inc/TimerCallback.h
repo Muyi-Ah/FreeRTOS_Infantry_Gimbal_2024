@@ -19,6 +19,7 @@
 #include "pid.h"
 #include "gimbal.h"
 #include "motor.h"
+#include "drv_can.h"
 
 //  ==== 函数外部声明 ====
 

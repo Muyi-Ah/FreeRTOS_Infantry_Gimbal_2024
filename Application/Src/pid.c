@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 17:21:55
+ * @LastEditTime: 2024-06-12 02:16:03
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\pid.c
  * @Description: 几种模式下的PID控制器
  *
@@ -175,14 +175,16 @@ int8_t rotating_speed_calculation(uint32_t RecId,
 /**
  * @description: 相对编码器位置PID
  * @param {uint32_t} RecId 接收ID
- * @param {int32_t} target_value 目标值(8192制)
+ * @param {int32_t*} target_value 目标值地址(数据值为8192制)
+ * @param {int32_t} delta 目标值与实际值的最大偏移范围
  * @param {int32_t} CW_angle_max 顺时针旋转最大值(8192制)
  * @param {int32_t} CCW_angle_max 逆时针旋转最大值(8192制)
  * @param {PID_param_struct_t} structure PID结构体
  * @return {int8_t} 错误值
  */
 int8_t relative_angle_calculation(uint32_t RecId,
-                                  int32_t target_value,
+                                  int32_t* target_value,
+                                  int32_t delta,
                                   int32_t CW_angle_max,
                                   int32_t CCW_angle_max,
                                   PID_param_struct_t structure)
@@ -214,6 +216,18 @@ int8_t relative_angle_calculation(uint32_t RecId,
 
     /* 获取该电机的 PID 结构地址 */
     pStruture = motor_info_list[index]->PID_structure_addr;
+
+    // 判断目标值与实际值的偏移范围
+    if (delta != 0) {
+        int32_t MinValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) - delta;
+        int32_t MaxValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) + delta;
+
+        if (*target_value < MinValue) {
+            *target_value = MinValue;
+        } else if (*target_value > MaxValue) {
+            *target_value = MaxValue;
+        }
+    }
 
     /* 将目标值存储到结构中 */
     pStruture->target_value = target_value;
@@ -589,7 +603,8 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
 /**
  * @description: 相对编码器位置串级PID
  * @param {uint32_t} RecId 接收ID
- * @param {int32_t} target_value 目标值(8192制)
+ * @param {int32_t*} target_value 目标值地址(数据值为8192制)
+ * @param {int32_t} delta 目标值与实际值的最大偏移范围
  * @param {int32_t} CW_angle_max 顺时针旋转最大值
  * @param {int32_t} CCW_angle_max 逆时针旋转最大值
  * @param {primary_PID_param_struct_t} primary_structure 外环PID结构体
@@ -597,7 +612,8 @@ int8_t absolute_angle_cascade_calculation(uint32_t RecId,
  * @return {int8_t} 错误值
  */
 int8_t relative_angle_cascade_calculation(uint32_t RecId,
-                                          int32_t target_value,
+                                          int32_t* target_value,
+                                          int32_t delta,
                                           int32_t CW_angle_max,
                                           int32_t CCW_angle_max,
                                           primary_PID_param_struct_t primary_structure,
@@ -606,8 +622,8 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
     struct relative_angle_cascade_t* pStruture = NULL;
     int32_t primary_pid_result                 = 0;
     int32_t secondary_pid_result               = 0;
-    int32_t mechanical_angle_change      = 0;
-    int32_t real_mechanical_angle_change = 0;
+    int32_t mechanical_angle_change            = 0;
+    int32_t real_mechanical_angle_change       = 0;
     int32_t res1 = 0, res2 = 0;
 
     int8_t index = RecId_find(RecId);
@@ -631,6 +647,18 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
 
     /* 获取该电机的 PID 结构地址 */
     pStruture = motor_info_list[index]->PID_structure_addr;
+
+    // 判断目标值与实际值的偏移范围
+    if (delta != 0) {
+        int32_t MinValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) - delta;
+        int32_t MaxValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) + delta;
+
+        if (*target_value < MinValue) {
+            *target_value = MinValue;
+        } else if (*target_value > MaxValue) {
+            *target_value = MaxValue;
+        }
+    }
 
     /* 将目标值存储到结构中 */
     pStruture->primary_target_value = target_value;
@@ -734,7 +762,8 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
 /**
  * @description: 基于CH110 IMU串级PID
  * @param {uint32_t} RecId 接收ID
- * @param {int32_t} target_value 目标值(8192制)
+ * @param {int32_t*} target_value 目标值地址(数据值为8192制)
+ * @param {int32_t} delta 目标值与实际值的最大偏移范围
  * @param {enum euler_axis} angular_velocity_axis 转轴数据源
  * @param {enum speed_loop_data_source} speed_src 速度数据源
  * @param {uint8_t} output_inversion 输出是否反向
@@ -743,7 +772,8 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
  * @return {int8_t} 错误值
  */
 int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
-                                            int32_t target_value,
+                                            int32_t* target_value,
+                                            int32_t delta,
                                             enum euler_axis angular_velocity_axis,
                                             enum speed_loop_data_source speed_src,
                                             uint8_t output_inversion,
@@ -776,8 +806,20 @@ int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
     /* 获取该电机的 PID 结构地址 */
     pStruture = motor_info_list[index]->PID_structure_addr;
 
+    // 判断目标值与实际值的偏移范围
+    if (delta != 0) {
+        int32_t MinValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) - delta;
+        int32_t MaxValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) + delta;
+
+        if (*target_value < MinValue) {
+            *target_value = MinValue;
+        } else if (*target_value > MaxValue) {
+            *target_value = MaxValue;
+        }
+    }
+
     /* 将目标值存储到结构中 */
-    pStruture->primary_target_value = target_value;
+    pStruture->primary_target_value = *target_value;
 
     /* 判断使用哪个轴 */
     if (angular_velocity_axis == roll) {

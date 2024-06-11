@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:12
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-09 00:16:35
+ * @LastEditTime: 2024-06-11 20:46:30
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\CustomDrivers\Src\drv_can.c
  * @Description: can报文数据处理
  *
@@ -40,13 +40,13 @@ void can_manage_init(void)
     CAN_FilterInitStructure.SlaveStartFilterBank = 14;
 
     /* 配置CAN报文滤波器 */
-    HAL_CAN_ConfigFilter(&MOTOR_CAN1, &CAN_FilterInitStructure);
+    HAL_CAN_ConfigFilter(&MOTOR_CAN, &CAN_FilterInitStructure);
 
     /* 启动CAN_IT_RX_FIFO0_MSG_PENDING中断通知 */
-    HAL_CAN_ActivateNotification(&MOTOR_CAN1, CAN_IT_RX_FIFO0_MSG_PENDING);
+    HAL_CAN_ActivateNotification(&MOTOR_CAN, CAN_IT_RX_FIFO0_MSG_PENDING);
 
     /* 启动CAN外设 */
-    HAL_CAN_Start(&MOTOR_CAN1);
+    HAL_CAN_Start(&MOTOR_CAN);
 
     /* can2 */
     CAN_FilterInitStructure.FilterIdHigh         = 0x0000;
@@ -79,13 +79,13 @@ void can_manage_init(void)
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef* hcan)
 {
     /* 电机实例 */
-    if (hcan->Instance == MOTOR_CAN1.Instance) {
+    if (hcan->Instance == MOTOR_CAN.Instance) {
         /* 创建局部变量 */
         CAN_RxHeaderTypeDef rx_header;
         uint8_t rx_buf[8];
 
         /* 获取电机报文 */
-        HAL_CAN_GetRxMessage(&MOTOR_CAN1, CAN_RX_FIFO0, &rx_header, rx_buf);
+        HAL_CAN_GetRxMessage(&MOTOR_CAN, CAN_RX_FIFO0, &rx_header, rx_buf);
 
         for (uint8_t index = 0; index < MOTOR_COUNT; index++) {
             /* 标记电机在线 */
@@ -262,10 +262,10 @@ static void __0x2FF_Encode(uint8_t index)
 
 /**
  * @description: 电机报文发送
- * @param {CAN_HandleTypeDef} CanHandle can实例
+ * @param {CAN_HandleTypeDef*} CanHandle can实例指针
  * @return {void}
  */
-void motor_control_send(CAN_HandleTypeDef CanHandle)
+void motor_control_send(CAN_HandleTypeDef* CanHandle)
 {
     // xSemaphoreTake( xCAN1_Semaphore, portMAX_DELAY );
     CAN_TxHeaderTypeDef tx_header[2];
@@ -292,11 +292,11 @@ void motor_control_send(CAN_HandleTypeDef CanHandle)
             __0x1FF_Encode(index);
     }
 
-    if (HAL_CAN_GetTxMailboxesFreeLevel(&CanHandle))
-        HAL_CAN_AddTxMessage(&CanHandle, &tx_header[0], tx_data_0x200, (uint32_t*)CAN_TX_MAILBOX0);
+    if (HAL_CAN_GetTxMailboxesFreeLevel(CanHandle))
+        HAL_CAN_AddTxMessage(CanHandle, &tx_header[0], tx_data_0x200, (uint32_t*)CAN_TX_MAILBOX0);
 
-    if (HAL_CAN_GetTxMailboxesFreeLevel(&CanHandle))
-        HAL_CAN_AddTxMessage(&CanHandle, &tx_header[1], tx_data_0x1FF, (uint32_t*)CAN_TX_MAILBOX0);
+    if (HAL_CAN_GetTxMailboxesFreeLevel(CanHandle))
+        HAL_CAN_AddTxMessage(CanHandle, &tx_header[1], tx_data_0x1FF, (uint32_t*)CAN_TX_MAILBOX0);
 
     // xSemaphoreGive( xCAN1_Semaphore );
 }

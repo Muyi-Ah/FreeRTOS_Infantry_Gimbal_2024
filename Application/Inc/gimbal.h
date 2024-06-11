@@ -26,6 +26,7 @@
 #include "pid.h"
 #include "state_machine.h"
 #include "sys_config.h"
+#include "motor.h"
 
 
 //  ==== 变量外部声明 ====
@@ -54,5 +55,7 @@ extern PID_param_struct_t FrictionRotaion_PIDParam;
 /// @brief 云台任务
 /// @param argument
 void Gimbal_Task(void* argument);
+
+void Theta_Update(void);
 
 #endif /*GIMBAL_H*/

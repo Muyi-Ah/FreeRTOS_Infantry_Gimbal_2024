@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-10 17:41:56
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 17:45:12
+ * @LastEditTime: 2024-06-11 23:28:47
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\init.c
  * @Description: 初始化
  *
@@ -28,8 +28,11 @@ void Robot_Init(void)
     // 拨盘
     add_motor(0x203, 0x200);
 
-    remote_init();
+    remote_init(); // 遥控器数据初始化
     // StateMachine_Init(&state_machine); //在main.c内进行状态机初始化
-    can_manage_init();
-    uart_manage_init();
+    can_manage_init();  // can初始化
+    uart_manage_init(); // 串口初始化
+
+    // 定时器初始化 不可早于add_motor和can、uart的初始化
+    HAL_TIM_Base_Start_IT(&htim6);
 }

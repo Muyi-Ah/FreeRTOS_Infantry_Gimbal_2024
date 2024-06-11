@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-11 15:06:11
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 18:15:55
+ * @LastEditTime: 2024-06-12 02:13:36
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\TimerCallback.c
  * @Description:
  *
@@ -19,12 +19,12 @@ void TIM6_Callback_Function(void)
     // pitch
     PIDPitch_Target = Pitch_Target;
     CH110_gyro_angle_cascade_calculation(
-        PITCH_MOTOR_ID, PIDPitch_Target, pitch, gyro, 0U, IMU_PitchPrimary_PIDParam, IMU_PitchSecondary_PIDParam);
+        PITCH_MOTOR_ID, &PIDPitch_Target, 0U, pitch, gyro, 0U, IMU_PitchPrimary_PIDParam, IMU_PitchSecondary_PIDParam);
 
     // yaw
     PIDYaw_Target = Yaw_Target;
     CH110_gyro_angle_cascade_calculation(
-        YAW_MOTOR_ID, PIDYaw_Target, yaw, gyro, 0U, IMU_YawPrimary_PIDParam, IMU_YawSecondary_PIDParam);
+        YAW_MOTOR_ID, &PIDYaw_Target, 2048U, yaw, gyro, 0U, IMU_YawPrimary_PIDParam, IMU_YawSecondary_PIDParam);
 
     // 摩擦轮
     rotating_speed_calculation(FRICTION_MOTOR1_ID, FrictionRPM_Target, 9000U, FrictionRotaion_PIDParam);
@@ -32,7 +32,8 @@ void TIM6_Callback_Function(void)
 
     // 拨盘
     relative_angle_cascade_calculation(
-        TRIGGER_MOTOR_ID, PIDTrigger_Target, 0U, 0U, TriggerPrimary_PIDParam, TriggerSecondary_PIDParam);
+        TRIGGER_MOTOR_ID, PIDTrigger_Target, 49152U, 0U, 0U, TriggerPrimary_PIDParam, TriggerSecondary_PIDParam);
+    // 目标值最大偏移范围49152 假设使用M2006 P36且拨盘每圈6颗弹丸 :8192*36/6=49152
 
     // 电机输出清除 该部分必须运行在PID控制器之后
     if (MotorOutput_Clear_Flag) {
@@ -40,7 +41,10 @@ void TIM6_Callback_Function(void)
     }
 
     // 发送电机数据
-    motor_control_send();
+    motor_control_send(&MOTOR_CAN);
+
+    // 云台-底盘夹角更新
+    Theta_Update();
 
     // 板间通信发送
     CommunicationData_Send();

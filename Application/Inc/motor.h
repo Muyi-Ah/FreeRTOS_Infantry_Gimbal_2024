@@ -11,6 +11,9 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
+#define ENCODER_MAX 8191
+#define FULL_ROTATION_DEGREES 360.0
+
 /*标准库引用*/
 #include "stdint.h"
 #include "stddef.h"
@@ -178,5 +181,8 @@ void motor_angle_sum_clear(uint32_t RecId);
 // int32_t get_motor_angle_sum(uint32_t RecId);
 void angle_change_clac(uint8_t index);
 void MotorOutput_AllClear(void);
+uint16_t GetMotorEncoderValue(uint32_t RecID);
+float Encoder_To_Angle(uint16_t EncoderValue);
+float Calculate_Theta(uint16_t EncoderValue, uint16_t InitialValue);
 
 #endif /*MOTOR_H*/
