@@ -177,5 +177,6 @@ uint16_t absolute_angle_remainder(int32_t value);
 void motor_angle_sum_clear(uint32_t RecId);
 // int32_t get_motor_angle_sum(uint32_t RecId);
 void angle_change_clac(uint8_t index);
+void MotorOutput_AllClear(void);
 
 #endif /*MOTOR_H*/

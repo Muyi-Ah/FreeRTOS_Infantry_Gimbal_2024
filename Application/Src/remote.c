@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 14:48:21
+ * @LastEditTime: 2024-06-11 16:01:12
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\remote.c
  * @Description: 遥控器数据处理
  *
@@ -23,6 +23,8 @@ void remote_init(void)
 }
 
 
+/// @brief 子状态更新
+/// @param  
 void StateMachine_SubState_Update(void)
 {
     // 左侧拨杆

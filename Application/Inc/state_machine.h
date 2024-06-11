@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 08:03:18
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 22:10:52
+ * @LastEditTime: 2024-06-11 18:42:15
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\state_machine.h
  * @Description:
  *
@@ -48,14 +48,13 @@ typedef enum {
 } Event;
 
 
-
 /*结构体定义*/
 
 typedef struct state_machine {
     //状态
     MainState currentState;
     SubState currentSubState;
-    //时间戳
+    //模式进入时间戳
     uint32_t enterMode11Time;
     uint32_t enterMode12Time;
     uint32_t enterMode13Time;
@@ -65,6 +64,16 @@ typedef struct state_machine {
     uint32_t enterMode31Time;
     uint32_t enterMode32Time;
     uint32_t enterMode33Time;
+    //子模式时间戳
+    uint32_t Mode11Time;
+    uint32_t Mode12Time;
+    uint32_t Mode13Time;
+    uint32_t Mode21Time;
+    uint32_t Mode22Time;
+    uint32_t Mode23Time;
+    uint32_t Mode31Time;
+    uint32_t Mode32Time;
+    uint32_t Mode33Time;
 } StateMachine;
 
 

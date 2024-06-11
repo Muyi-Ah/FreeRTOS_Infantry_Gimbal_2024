@@ -734,7 +734,7 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
 /**
  * @description: 基于CH110 IMU串级PID
  * @param {uint32_t} RecId 接收ID
- * @param {int32_t} target_value 目标值(360制)
+ * @param {int32_t} target_value 目标值(8192制)
  * @param {enum euler_axis} angular_velocity_axis 转轴数据源
  * @param {enum speed_loop_data_source} speed_src 速度数据源
  * @param {uint8_t} output_inversion 输出是否反向
