@@ -103,6 +103,34 @@ secondary_PID_param_struct_t TriggerSecondary_PIDParam = {.kp                 = 
 /// @brief 摩擦轮PID参数
 PID_param_struct_t FrictionRotaion_PIDParam = {.kp = 0, .ki = 0, .kd = 0, .cumulative_err_max = 0, .output_max = 0};
 
+/// @brief 视觉YAW轴外环PID参数
+primary_PID_param_struct_t Vision_YAW_Primary_PIDParam = {.kp                 = 0,
+                                                          .ki                 = 0,
+                                                          .kd                 = 0,
+                                                          .cumulative_err_max = 0,
+                                                          .output_max         = 0};
+
+/// @brief 视觉YAW轴内环PID参数
+secondary_PID_param_struct_t Vision_YAW_Secondary_PIDParam = {.kp                 = 0,
+                                                              .ki                 = 0,
+                                                              .kd                 = 0,
+                                                              .cumulative_err_max = 0,
+                                                              .output_max         = 0};
+
+/// @brief 视觉YAW轴外环PID参数
+primary_PID_param_struct_t Vision_PITCH_Primary_PIDParam = {.kp                 = 0,
+                                                            .ki                 = 0,
+                                                            .kd                 = 0,
+                                                            .cumulative_err_max = 0,
+                                                            .output_max         = 0};
+
+/// @brief 视觉YAW轴内环PID参数
+secondary_PID_param_struct_t Vision_PITCH_Secondary_PIDParam = {.kp                 = 0,
+                                                                .ki                 = 0,
+                                                                .kd                 = 0,
+                                                                .cumulative_err_max = 0,
+                                                                .output_max         = 0};
+
 
 //  ==== 函数定义 ====
 

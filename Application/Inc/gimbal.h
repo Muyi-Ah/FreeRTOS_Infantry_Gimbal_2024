@@ -48,6 +48,10 @@ extern secondary_PID_param_struct_t IMU_PitchSecondary_PIDParam;
 extern primary_PID_param_struct_t TriggerPrimary_PIDParam;
 extern secondary_PID_param_struct_t TriggerSecondary_PIDParam;
 extern PID_param_struct_t FrictionRotaion_PIDParam;
+extern primary_PID_param_struct_t Vision_YAW_Primary_PIDParam;
+extern secondary_PID_param_struct_t Vision_YAW_Secondary_PIDParam;
+extern primary_PID_param_struct_t Vision_PITCH_Primary_PIDParam;
+extern secondary_PID_param_struct_t Vision_PITCH_Secondary_PIDParam;
 
 
 /*函数外部声明*/

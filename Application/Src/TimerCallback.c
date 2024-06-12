@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-11 15:06:11
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-12 21:47:23
+ * @LastEditTime: 2024-06-12 23:10:27
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\TimerCallback.c
  * @Description:
  *
@@ -16,10 +16,28 @@ void TIM6_Callback_Function(void)
     //  定时运行的东西...
     // 控制器计算...
 
-    //
+    // 使用视觉
     if (vision.Use) {
-        /* code */
-    } else {
+        // yaw
+        vision_cascade_calculation(YAW_MOTOR_ID,
+                                   vision.VisionTargetYaw,
+                                   yaw,
+                                   gyro,
+                                   0U,
+                                   Vision_YAW_Primary_PIDParam,
+                                   Vision_YAW_Secondary_PIDParam);
+
+        // pitch
+        vision_cascade_calculation(YAW_MOTOR_ID,
+                                   vision.VisionTargetYaw,
+                                   pitch,
+                                   gyro,
+                                   0U,
+                                   Vision_PITCH_Primary_PIDParam,
+                                   Vision_PITCH_Secondary_PIDParam);
+    }
+    // 不使用视觉
+    else {
         // yaw
         PIDYaw_Target = Yaw_Target;
         CH110_gyro_angle_cascade_calculation(
