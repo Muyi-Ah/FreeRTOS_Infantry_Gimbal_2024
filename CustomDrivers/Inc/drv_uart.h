@@ -26,8 +26,8 @@
 
 /*变量外部声明*/
 
-extern uint8_t remote_rx_buf[REMOTE_DATA_SIZE];
-extern uint8_t communication_rx_buf[COMMUNICATION_RECEIVE_DATA_SIZE];
+extern uint8_t remote_rx_buf[REMOTE_DATA_LENGTH];
+extern uint8_t communication_rx_buf[COMMUNICATION_RECEIVE_DATA_LENGTH];
 
 /* 函数外部声明 */
 

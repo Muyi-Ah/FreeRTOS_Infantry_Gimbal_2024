@@ -18,7 +18,8 @@
 			"gimbal.h": "c",
 			"state_machine.h": "c",
 			"remote.h": "c",
-			"error_detection.h": "c"
+			"error_detection.h": "c",
+			"vision.h": "c"
 		}
 	}
 }

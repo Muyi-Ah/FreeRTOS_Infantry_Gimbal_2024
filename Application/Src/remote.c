@@ -67,7 +67,7 @@ void StateMachine_SubState_Update(void)
 }
 
 
-void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE])
+void remote_data_update(uint8_t rx_buf[REMOTE_DATA_LENGTH])
 {
     RecMsg.remote.ch0 = (rx_buf[0] | rx_buf[1] << 8) & 0x07FF;
     RecMsg.remote.ch1 = (rx_buf[1] >> 3 | rx_buf[2] << 5) & 0x07FF;

@@ -115,7 +115,7 @@ void Gimbal_Task(void* argument)
             __HAL_UART_CLEAR_OREFLAG(&REMOTE_UART);
 
             // 重新启动接收
-            HAL_UARTEx_ReceiveToIdle_DMA(&REMOTE_UART, remote_rx_buf, REMOTE_DATA_SIZE);
+            HAL_UARTEx_ReceiveToIdle_DMA(&REMOTE_UART, remote_rx_buf, REMOTE_DATA_LENGTH);
         }
 
         // 解决串口ORE问题
@@ -124,7 +124,7 @@ void Gimbal_Task(void* argument)
             __HAL_UART_CLEAR_OREFLAG(&COMMUNICATE_UART);
 
             // 重新启动接收
-            HAL_UARTEx_ReceiveToIdle_DMA(&COMMUNICATE_UART, communication_rx_buf, COMMUNICATION_RECEIVE_DATA_SIZE);
+            HAL_UARTEx_ReceiveToIdle_DMA(&COMMUNICATE_UART, communication_rx_buf, COMMUNICATION_RECEIVE_DATA_LENGTH);
         }
 
         // 获取系统时间戳，单位为ms

@@ -96,12 +96,12 @@ int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
                                             primary_PID_param_struct_t primary_structure,
                                             secondary_PID_param_struct_t secondary_structure);
 
-// int8_t vision_angle_cascade_caculation(uint32_t RecId,
-//                                        int32_t target_value,
-//                                        enum euler_axis angular_velocity_axis,
-//                                        enum speed_loop_data_source speed_src,
-//                                        uint8_t output_inversion,
-//                                        primary_PID_param_struct_t primary_structure,
-//                                        secondary_PID_param_struct_t secondary_structure);
+int8_t vision_cascade_calculation(uint32_t RecID,
+                                  float target_value,
+                                  enum euler_axis angular_velocity_axis,
+                                  enum speed_loop_data_source speed_src,
+                                  uint8_t output_inversion,
+                                  primary_PID_param_struct_t primary_structure,
+                                  secondary_PID_param_struct_t secondary_structure);
 
 #endif /*PID_H*/

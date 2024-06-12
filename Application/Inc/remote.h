@@ -83,6 +83,6 @@ void remote_init(void);
 
 /// @brief 遥控器数据更新
 /// @param rx_buf 数据列表
-void remote_data_update(uint8_t rx_buf[REMOTE_DATA_SIZE]);
+void remote_data_update(uint8_t rx_buf[REMOTE_DATA_LENGTH]);
 
 #endif /*REMOTE_H*/

@@ -24,6 +24,9 @@ uint8_t remote_error;
 uint8_t communication_online_reply;
 uint8_t communication_error;
 
+uint8_t vision_online_reply;
+uint8_t vision_error;
+
 void ErrorDetection_Task(void* argument)
 {
     for (;;) {

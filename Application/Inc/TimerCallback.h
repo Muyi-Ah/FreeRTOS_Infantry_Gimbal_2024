@@ -20,6 +20,7 @@
 #include "gimbal.h"
 #include "motor.h"
 #include "drv_can.h"
+#include "vision.h"
 
 //  ==== 函数外部声明 ====
 

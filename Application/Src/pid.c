@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-12 02:16:03
+ * @LastEditTime: 2024-06-12 22:55:23
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\pid.c
  * @Description: 几种模式下的PID控制器
  *
@@ -69,6 +69,21 @@ int32_t cumulative_limit_int16_t(int32_t amt, int16_t add, int32_t limit)
  * @return {int32_t} 处理后的值
  */
 int32_t cumulative_limit_int32_t(int32_t amt, int32_t add, int32_t limit)
+{
+    if ((amt + add) < -limit)
+        return -limit;
+    else if ((amt + add) > limit)
+        return limit;
+    return amt + add;
+}
+
+
+/// @brief float类型限幅
+/// @param amt 积分值
+/// @param add 误差值
+/// @param limit 限幅值
+/// @return 处理后的值
+float cumulative_limit_float(float amt, float add, float limit)
 {
     if ((amt + add) < -limit)
         return -limit;
@@ -219,8 +234,8 @@ int8_t relative_angle_calculation(uint32_t RecId,
 
     // 判断目标值与实际值的偏移范围
     if (delta != 0) {
-        int32_t MinValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) - delta;
-        int32_t MaxValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) + delta;
+        int32_t MinValue = pStruture->spindle_angle_change_sum - delta;
+        int32_t MaxValue = pStruture->spindle_angle_change_sum + delta;
 
         if (*target_value < MinValue) {
             *target_value = MinValue;
@@ -650,8 +665,8 @@ int8_t relative_angle_cascade_calculation(uint32_t RecId,
 
     // 判断目标值与实际值的偏移范围
     if (delta != 0) {
-        int32_t MinValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) - delta;
-        int32_t MaxValue = ((int32_t)(roll_cumulative_change_angle * 22.755555f)) + delta;
+        int32_t MinValue = pStruture->spindle_angle_change_sum - delta;
+        int32_t MaxValue = pStruture->spindle_angle_change_sum + delta;
 
         if (*target_value < MinValue) {
             *target_value = MinValue;
@@ -847,7 +862,123 @@ int8_t CH110_gyro_angle_cascade_calculation(uint32_t RecId,
 
     /* 积分限幅 */
     if (primary_structure.cumulative_err_max != 0) {
-        pStruture->primary_cumulative_error = cumulative_limit_int16_t(
+        pStruture->primary_cumulative_error = cumulative_limit_int32_t(
+            pStruture->primary_cumulative_error, pStruture->primary_error, primary_structure.cumulative_err_max);
+    }
+
+    /* 计算此次 PID 操作的结果 */
+    primary_pid_result = (pStruture->primary_error * primary_structure.kp) +
+                         (pStruture->primary_cumulative_error * primary_structure.ki) +
+                         ((pStruture->primary_error - pStruture->primary_error_previous) * primary_structure.kd);
+
+    /* 更新上一次误差值 */
+    pStruture->primary_error_previous = pStruture->primary_error;
+
+    /* 输出限幅 */
+    pStruture->primary_output = output_limit(primary_pid_result, primary_structure.output_max);
+
+    /*******************************************外环计算结束*************************************************/
+
+    pStruture->secondary_target_value = pStruture->primary_output;
+
+    /* 使用电机速度作为速度源 */
+    /* 将电机返回的转速值转换为正负值 */
+    if (speed_src == motor) {
+        if (motor_info_list[index]->rpm < 32767) {
+            pStruture->secondary_error = pStruture->secondary_target_value - motor_info_list[index]->rpm;
+        } else if (motor_info_list[index]->rpm > 32767) {
+            pStruture->secondary_error = pStruture->secondary_target_value - (motor_info_list[index]->rpm - 65535);
+        }
+    }
+    /* 使用陀螺仪角速度作为速度源 */
+    else if (speed_src == gyro) {
+        if (angular_velocity_axis == roll) {
+            pStruture->secondary_error = pStruture->secondary_target_value - CH110_data.X_axisAngularVelocity;
+        } else if (angular_velocity_axis == pitch) {
+            pStruture->secondary_error = pStruture->secondary_target_value - CH110_data.Y_axisAngularVelocity;
+        } else if (angular_velocity_axis == yaw) {
+            pStruture->secondary_error = pStruture->secondary_target_value - CH110_data.Z_axisAngularVelocity;
+        }
+    }
+
+    /* 积分限幅 */
+    if (secondary_structure.cumulative_err_max != 0) {
+        pStruture->secondary_cumulative_error = cumulative_limit_int16_t(
+            pStruture->secondary_cumulative_error, pStruture->secondary_error, secondary_structure.cumulative_err_max);
+    }
+
+    /* 计算此次 PID 操作的结果 */
+    secondary_pid_result =
+        (pStruture->secondary_error * secondary_structure.kp) +
+        (pStruture->secondary_cumulative_error * secondary_structure.ki) +
+        ((pStruture->secondary_error - pStruture->secondary_error_previous) * secondary_structure.kd);
+
+    /* 更新上一次误差值 */
+    pStruture->secondary_error_previous = pStruture->secondary_error;
+
+    /* 输出限幅 */
+    pStruture->secondary_output = output_limit(secondary_pid_result, secondary_structure.output_max);
+
+    /* 将输出值放入电机信息结构中等待发送 */
+    if (output_inversion == 0U) {
+        motor_info_list[index]->final_output = pStruture->secondary_output;
+    } else {
+        motor_info_list[index]->final_output = -pStruture->secondary_output;
+    }
+
+    return LIB_OK;
+}
+
+
+/// @brief 视觉串级PID
+/// @param RecID 接收ID
+/// @param target_value 目标值(视觉回传数据)
+/// @param angular_velocity_axis 转轴数据源
+/// @param speed_src 度数据源
+/// @param output_inversion 输出是否反向
+/// @param primary_structure 外环PID结构体
+/// @param secondary_structure 内环PID结构体
+/// @return 错误值
+int8_t vision_cascade_calculation(uint32_t RecID,
+                                  float target_value,
+                                  enum euler_axis angular_velocity_axis,
+                                  enum speed_loop_data_source speed_src,
+                                  uint8_t output_inversion,
+                                  primary_PID_param_struct_t primary_structure,
+                                  secondary_PID_param_struct_t secondary_structure)
+{
+    struct vision_angle_cascade_t* pStruture = NULL;
+    int32_t primary_pid_result               = 0;
+    int32_t secondary_pid_result             = 0;
+
+    int8_t index = RecId_find(RecID);
+
+    /* 判断指定的 RecId 是否存在 */
+    if (index != INDEX_ERROR) {
+        /* 判断 PID 类型是否为指定类型 */
+        if (motor_info_list[index]->PID_type != vision_angle_cascade) {
+            /* 释放原 PID 类型结构的内存空间 */
+            release_structure_memory(index);
+
+            /* 申请新 PID 类型结构的内存空间 */
+            request_structure_memory(index, vision_angle_cascade);
+        }
+    }
+
+    /* 指定的 RecId 不存在 */
+    else {
+        return INDEX_ERROR;
+    }
+
+    /* 获取该电机的 PID 结构地址 */
+    pStruture = motor_info_list[index]->PID_structure_addr;
+
+    // 视觉的目标值本就是像素差
+    pStruture->primary_error = target_value;
+
+    /* 积分限幅 */
+    if (primary_structure.cumulative_err_max != 0) {
+        pStruture->primary_cumulative_error = cumulative_limit_float(
             pStruture->primary_cumulative_error, pStruture->primary_error, primary_structure.cumulative_err_max);
     }
 

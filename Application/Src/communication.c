@@ -23,7 +23,7 @@ uint8_t communication_send_buf[COMMUNICATION_SEND_DATA_SIZE];
  */
 void CommunicationData_Update(uint8_t* rx_buf)
 {
-    if (verify_accumulation_check_sum(rx_buf, COMMUNICATION_RECEIVE_DATA_SIZE)) {
+    if (verify_accumulation_check_sum(rx_buf, COMMUNICATION_RECEIVE_DATA_LENGTH)) {
         /* code */
     }
 }

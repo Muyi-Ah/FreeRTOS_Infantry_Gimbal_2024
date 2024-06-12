@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-10 22:50:56
+ * @LastEditTime: 2024-06-12 16:22:25
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\error_detection.h
  * @Description: 
  * 
@@ -36,6 +36,9 @@ extern uint8_t remote_error;
 
 extern uint8_t communication_online_reply;
 extern uint8_t communication_error;
+
+extern uint8_t vision_online_reply;
+extern uint8_t vision_error;
 
 /* 函数外部声明 */
 void ErrorDetection_Task(void* argument);

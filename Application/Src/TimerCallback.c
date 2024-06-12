@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-11 15:06:11
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-12 02:13:36
+ * @LastEditTime: 2024-06-12 21:47:23
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Src\TimerCallback.c
  * @Description:
  *
@@ -14,17 +14,28 @@ void TIM6_Callback_Function(void)
 {
     // 1KHz
     //  定时运行的东西...
-
     // 控制器计算...
-    // pitch
-    PIDPitch_Target = Pitch_Target;
-    CH110_gyro_angle_cascade_calculation(
-        PITCH_MOTOR_ID, &PIDPitch_Target, 0U, pitch, gyro, 0U, IMU_PitchPrimary_PIDParam, IMU_PitchSecondary_PIDParam);
 
-    // yaw
-    PIDYaw_Target = Yaw_Target;
-    CH110_gyro_angle_cascade_calculation(
-        YAW_MOTOR_ID, &PIDYaw_Target, 2048U, yaw, gyro, 0U, IMU_YawPrimary_PIDParam, IMU_YawSecondary_PIDParam);
+    //
+    if (vision.Use) {
+        /* code */
+    } else {
+        // yaw
+        PIDYaw_Target = Yaw_Target;
+        CH110_gyro_angle_cascade_calculation(
+            YAW_MOTOR_ID, &PIDYaw_Target, 2048U, yaw, gyro, 0U, IMU_YawPrimary_PIDParam, IMU_YawSecondary_PIDParam);
+
+        // pitch
+        PIDPitch_Target = Pitch_Target;
+        CH110_gyro_angle_cascade_calculation(PITCH_MOTOR_ID,
+                                             &PIDPitch_Target,
+                                             0U,
+                                             pitch,
+                                             gyro,
+                                             0U,
+                                             IMU_PitchPrimary_PIDParam,
+                                             IMU_PitchSecondary_PIDParam);
+    }
 
     // 摩擦轮
     rotating_speed_calculation(FRICTION_MOTOR1_ID, FrictionRPM_Target, 9000U, FrictionRotaion_PIDParam);

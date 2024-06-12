@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-11 23:53:02
+ * @LastEditTime: 2024-06-12 16:15:14
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\sys_config.h
  * @Description: 一些配置选项
  *
@@ -25,18 +25,21 @@
 /*遥控器串口*/
 #define REMOTE_UART huart3
 
+/*遥控器数据字节数*/
+#define REMOTE_DATA_LENGTH 18
+
 /*板间通信串口*/
 #define COMMUNICATE_UART huart1
+
+/*板间通信数据字节数*/
+#define COMMUNICATION_RECEIVE_DATA_LENGTH 15
+#define COMMUNICATION_SEND_DATA_SIZE 28
 
 /*视觉PC通信串口*/
 #define VISION_UART huart6
 
-/*遥控器数据字节数*/
-#define REMOTE_DATA_SIZE 18
-
-/*板间通信数据字节数*/
-#define COMMUNICATION_RECEIVE_DATA_SIZE 15
-#define COMMUNICATION_SEND_DATA_SIZE 28
+//视觉接收数据字节数
+#define VISION_RECEIVE_DATA_LENGTH 23
 
 #define can1 (uint8_t)1
 #define can2 (uint8_t)2
@@ -60,7 +63,7 @@
 // #define enable_angle_sum_clac_0x201
 // #define enable_angle_sum_clac_0x202
 // #define enable_angle_sum_clac_0x203
-// #define enable_angle_sum_clac_0x2046
+// #define enable_angle_sum_clac_0x204
 // #define enable_angle_sum_clac_0x205
 // #define enable_angle_sum_clac_0x206
 // #define enable_angle_sum_clac_0x207

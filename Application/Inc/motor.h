@@ -2,7 +2,7 @@
  * @Author: Ryan Xavier 467030312@qq.com
  * @Date: 2024-06-08 04:22:03
  * @LastEditors: Ryan Xavier 467030312@qq.com
- * @LastEditTime: 2024-06-08 07:20:26
+ * @LastEditTime: 2024-06-12 18:55:23
  * @FilePath: \FreeRTOS_Infantry_Gimbal_2024\Application\Inc\motor.h
  * @Description: 
  * 
@@ -145,11 +145,11 @@ struct gyro_angle_cascade_t {
 };
 
 struct vision_angle_cascade_t {
-    int32_t primary_target_value;
+    float primary_target_value;
     int16_t primary_output;
-    int32_t primary_error;
-    int32_t primary_error_previous;
-    int32_t primary_cumulative_error;
+    float primary_error;
+    float primary_error_previous;
+    float primary_cumulative_error;
 
     int16_t secondary_target_value;
     int16_t secondary_output;
